@@ -18,11 +18,21 @@ function Login() {
                                 <form>
                                     <div className='form-group mb-3'>
                                         <label>Email</label>
-                                        <input type='' name='email' className='form-control' value='' />
+                                        <input
+                                            type=''
+                                            name='email'
+                                            className='form-control'
+                                            value=''
+                                        />
                                     </div>
                                     <div className='form-group mb-3'>
                                         <label>Password</label>
-                                        <input type='' name='password' className='form-control' value='' />
+                                        <input
+                                            type=''
+                                            name='password'
+                                            className='form-control'
+                                            value=''
+                                        />
                                     </div>
 
                                     <div className='form-group mb-3'>
