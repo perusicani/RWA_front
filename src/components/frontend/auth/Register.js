@@ -64,7 +64,6 @@ function Register() {
                         toast.success(response.data.message);
 
                         setTimeout(() => {
-                            // location.reload();
                             navigate('/');
                         }, 2500);
                     }
@@ -105,7 +104,7 @@ function Register() {
                                     <div className='form-group mb-3'>
                                         <label>Name</label>
                                         <input
-                                            type=''
+                                            type='name'
                                             name='name'
                                             className='form-control'
                                             value={registerInput.name}
@@ -116,7 +115,7 @@ function Register() {
                                     <div className='form-group mb-3'>
                                         <label>Email</label>
                                         <input
-                                            type=''
+                                            type='email'
                                             name='email'
                                             className='form-control'
                                             value={registerInput.email}
@@ -127,7 +126,7 @@ function Register() {
                                     <div className='form-group mb-3'>
                                         <label>Password</label>
                                         <input
-                                            type=''
+                                            type='password'
                                             name='password'
                                             className='form-control'
                                             value={registerInput.password}
