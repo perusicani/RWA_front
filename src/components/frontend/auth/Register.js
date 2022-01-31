@@ -1,20 +1,29 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import NavBar from '../../../layouts/frontend/NavBar';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { useNavigate } from 'react-router-dom';
+
 function Register() {
 
-    const [registerInput, setregister] = useState({
+    const navigate = useNavigate();
+
+    const [registerInput, setRegister] = useState({
         name: '',
         email: '',
         password: '',
-        confirm_password: '',
+        // confirm_password: '',
+        error_list: [],
     });
 
     const handleInput = (event) => {
-        event.persist();
-        setregister({ ...registerInput, [event.target.name]: event.target.value });
+
+        setRegister({ ...registerInput, [event.target.name]: event.target.value });
+
     }
 
     const registerSubmit = (event) => {
@@ -24,28 +33,65 @@ function Register() {
             name: registerInput.name,
             email: registerInput.email,
             password: registerInput.password,
-            confirm_password: registerInput.confirm_password,
+            // confirm_password: registerInput.confirm_password,
         }
 
         axios.get('/sanctum/csrf-cookie').then((CSRFresponse) => {
 
-            console.log('CSRF: ' + CSRFresponse);
+            console.log('CSRF: ' + JSON.stringify(CSRFresponse.data));
 
             axios.post('/api/register', data).then((response) => {
-                console.log('Register: ' + response);
+
+                // console.log('token: ' + JSON.stringify(response.data.token));
+                // console.log('user: ' + JSON.stringify(response.data.user));
+                // console.log('name: ' + JSON.stringify(response.data.user.name));
+
+                if (response.status === 200) {
+
+                    if (response.data.validation_errors && response.data.validation_errors.length) {
+
+                        setRegister({ ...registerInput, error_list: response.data.validation_errors });
+                        toast.error('Register failed!');
+
+                    } else {
+
+                        console.log('Register: ' + JSON.stringify(response.data));
+
+                        // once the register passes, get token and store to local storage
+                        localStorage.setItem('auth_token', response.data.token);
+                        localStorage.setItem('auth_name', response.data.user.name);
+
+                        toast.success(response.data.message);
+
+                        setTimeout(() => {
+                            // location.reload();
+                            navigate('/');
+                        }, 2500);
+                    }
+
+                } else {
+
+                    setRegister({ ...registerInput, error_list: response.data.validation_errors });
+                    toast.error('Register failed!');
+
+                }
+
             }).catch((error) => {
                 console.log('Register: ' + error);
+                toast.error('Register failed!');
             });
 
         }).catch((error) => {
             //Error gettinf CSRF token?
             console.log('CSRF: ' + error);
+            toast.error('An error occurred while getting the CSRF token!');
         });
 
     }
 
     return (
         <div>
+            <ToastContainer />
             <NavBar />
             <div className='container py-5'>
                 <div className='row justify-content-center'>
@@ -63,8 +109,9 @@ function Register() {
                                             name='name'
                                             className='form-control'
                                             value={registerInput.name}
-                                        // onChange={ }
+                                            onChange={handleInput}
                                         />
+                                        <span>{registerInput.error_list.name ?? ''}</span>
                                     </div>
                                     <div className='form-group mb-3'>
                                         <label>Email</label>
@@ -73,7 +120,9 @@ function Register() {
                                             name='email'
                                             className='form-control'
                                             value={registerInput.email}
+                                            onChange={handleInput}
                                         />
+                                        <span>{registerInput.error_list.email ?? ''}</span>
                                     </div>
                                     <div className='form-group mb-3'>
                                         <label>Password</label>
@@ -82,17 +131,19 @@ function Register() {
                                             name='password'
                                             className='form-control'
                                             value={registerInput.password}
+                                            onChange={handleInput}
                                         />
+                                        <span>{registerInput.error_list.password ?? ''}</span>
                                     </div>
-                                    <div className='form-group mb-3'>
+                                    {/* <div className='form-group mb-3'>
                                         <label>Confirm Password</label>
                                         <input
                                             type=''
                                             name='confirm_password'
                                             className='form-control'
-                                            value={registerInput.confirm_password}
+                                        value={registerInput.confirm_password}
                                         />
-                                    </div>
+                                    </div> */}
 
                                     <div className='form-group mb-3'>
                                         <button type='submit' className='btn btn-primary' >
