@@ -39,7 +39,7 @@ function Login() {
 
             axios.post('/api/login', data).then((response) => {
 
-                if (response.status === 200 && response.data.validation_errors && response.data.validation_errors.length) {
+                if (response.status === 200) {
 
                     console.log('Login success: ' + JSON.stringify(response.data));
 
@@ -59,7 +59,7 @@ function Login() {
                     console.log('Login bad creds');
                     toast.warning(response.data.message);
 
-                } else {
+                } else if (response.status === 403) {
                     //validation error
                     console.log('Validation error: ' + response.data.validation_errors);
                     setLogin({ ...loginInput, error_list: response.data.validation_errors });
