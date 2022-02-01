@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
 import MasterLayout from './layouts/admin/MasterLayout';
 import Home from './components/frontend/Home';
@@ -7,6 +7,7 @@ import Login from './components/frontend/auth/Login';
 import Register from './components/frontend/auth/Register';
 
 import axios from 'axios';
+import { getSpaceUntilMaxLength } from '@testing-library/user-event/dist/utils';
 
 
 axios.defaults.baseURL = "http://localhost:8000";
@@ -22,6 +23,11 @@ axios.interceptors.request.use(function (config) {
 axios.defaults.withCredentials = true;
 
 function App() {
+
+  function getAuth() {
+    return localStorage.getItem('auth_token');
+  }
+
   return (
     <div className="App">
       <Router>
@@ -29,11 +35,21 @@ function App() {
 
           <Route exact path='/' name='Home' render={(props) => <Home {...props} />} element={<Home />} />
 
+          {/* if user is authenticated, redirect from login and register to home till they logout */}
+          <Route path='/login'
+            name='Login'
+            render={(props) => !getAuth() ? <Login {...props} /> : <Navigate to='/' />}
+            element={!getAuth() ? <Login /> : <Navigate to='/' />}
+          />
+          <Route path='/register'
+            name='Register'
+            render={(props) => !getAuth() ? <Register {...props} /> : <Navigate to='/' />}
+            element={!getAuth() ? <Register /> : <Navigate to='/' />}
+          />
+
+          {/* if user isn't authenticated, redirectto login */}
+
           <Route path='/admin/*' name='Admin' render={(props) => <MasterLayout {...props} />} element={<MasterLayout />} />
-
-          <Route path='/login' name='Login' render={(props) => <Login {...props} />} element={<Login />} />
-          <Route path='/register' name='Register' render={(props) => <Register {...props} />} element={<Register />} />
-
         </Routes>
       </Router>
     </div>
