@@ -5,9 +5,9 @@ import MasterLayout from './layouts/admin/MasterLayout';
 import Home from './components/frontend/Home';
 import Login from './components/frontend/auth/Login';
 import Register from './components/frontend/auth/Register';
+import PrivateRoute from './PrivateRoute';
 
 import axios from 'axios';
-import { getSpaceUntilMaxLength } from '@testing-library/user-event/dist/utils';
 
 
 axios.defaults.baseURL = "http://localhost:8000";
@@ -47,9 +47,17 @@ function App() {
             element={!getAuth() ? <Register /> : <Navigate to='/' />}
           />
 
-          {/* if user isn't authenticated, redirectto login */}
+          {/* if user isn't authenticated, redirect to login */}
 
-          <Route path='/admin/*' name='Admin' render={(props) => <MasterLayout {...props} />} element={<MasterLayout />} />
+          {/* <Route exact path='/' element={<PrivateRoute />}>
+            <Route exact path='/' element={<Home />} />
+          </Route> */}
+
+          {/* <Route path='/admin/*' name='Admin' render={(props) => <MasterLayout {...props} />} element={<MasterLayout />} /> */}
+          <Route path='/admin/*' element={<PrivateRoute />}>
+            <Route path='/admin/*' name='Admin' render={(props) => <MasterLayout {...props} />} element={<MasterLayout />} />
+          </Route>
+
         </Routes>
       </Router>
     </div>
