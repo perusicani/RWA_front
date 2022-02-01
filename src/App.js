@@ -6,6 +6,7 @@ import Home from './components/frontend/Home';
 import Login from './components/frontend/auth/Login';
 import Register from './components/frontend/auth/Register';
 import PrivateRoute from './PrivateRoute';
+import PrivateAdminRoute from './PrivateAdminRoute';
 
 import axios from 'axios';
 
@@ -49,12 +50,14 @@ function App() {
 
           {/* if user isn't authenticated, redirect to login */}
 
-          {/* <Route exact path='/' element={<PrivateRoute />}>
-            <Route exact path='/' element={<Home />} />
-          </Route> */}
+          {/* 
+            <Route exact path='/' element={<PrivateRoute />}>
+              <Route exact path='/' element={<Home />} />
+            </Route> 
+          */}
 
           {/* <Route path='/admin/*' name='Admin' render={(props) => <MasterLayout {...props} />} element={<MasterLayout />} /> */}
-          <Route path='/admin/*' element={<PrivateRoute />}>
+          <Route path='/admin/*' element={<PrivateAdminRoute />}>
             <Route path='/admin/*' name='Admin' render={(props) => <MasterLayout {...props} />} element={<MasterLayout />} />
           </Route>
 
