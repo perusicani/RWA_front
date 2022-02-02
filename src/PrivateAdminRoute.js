@@ -34,12 +34,34 @@ const PrivateAdminRoute = () => {
         if (error.response.status === 401) {
             console.log('Unauthorized! ' + error.response.data.message);
             toast.error('Unauthorized! ' + error.response.data.message);
-            navigate('/');
+            setTimeout(() => {
+                navigate('/');
+            }, 2500);
         }
         return Promise.reject(error);
-    }
+    });
 
-    );
+    axios.interceptors.response.use(function (response) {
+        return response;
+    }, function (error) {
+        if (error.response.status === 403)  // Access denied
+        {
+            console.log('Forbidden! ' + error.response.data.message);
+            toast.error('Forbidden! ' + error.response.data.message);
+            setTimeout(() => {
+                navigate('/403');
+            }, 2500);
+        }
+        if (error.response.status === 404)  // No page
+        {
+            console.log('Page not found!');
+            toast.error('Page not found!');
+            setTimeout(() => {
+                navigate('/404');
+            }, 2500);
+        }
+        return Promise.reject(error);
+    });
 
     // neč kao debounce
     if (loading) {

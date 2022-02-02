@@ -7,9 +7,10 @@ import Login from './components/frontend/auth/Login';
 import Register from './components/frontend/auth/Register';
 import PrivateRoute from './PrivateRoute';
 import PrivateAdminRoute from './PrivateAdminRoute';
+import Page403 from './components/errors/Page403';
+import Page404 from './components/errors/Page404';
 
 import axios from 'axios';
-
 
 axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -35,6 +36,9 @@ function App() {
         <Routes>
 
           <Route exact path='/' name='Home' render={(props) => <Home {...props} />} element={<Home />} />
+
+          <Route path='/403' name='Page403' render={(props) => <Page403 {...props} />} element={<Page403 />} />
+          <Route path='/404' name='Page404' render={(props) => <Page404 {...props} />} element={<Page404 />} />
 
           {/* if user is authenticated, redirect from login and register to home till they logout */}
           <Route path='/login'
