@@ -34,11 +34,8 @@ function Login() {
         }
 
         axios.get('/sanctum/csrf-cookie').then((CSRFresponse) => {
-
             axios.post('/api/login', data).then((response) => {
-
                 if (response.status === 200) {
-
                     console.log('Login success: ' + JSON.stringify(response.data));
 
                     // once the Login passes, get token and store to local storage
@@ -47,28 +44,31 @@ function Login() {
 
                     toast.success(response.data.message);
 
-                    setTimeout(() => {
-                        navigate('/');
-                    }, 2500);
+                    if (response.data.role === 'admin') {
+                        setTimeout(() => {
+                            navigate('/admin');
+                        }, 2500);
+                    } else {
+                        setTimeout(() => {
+                            navigate('/');
+                        }, 2500);
+                    }
+
 
                 } else if (response.status === 401) {
-
                     //bad creds error
                     console.log('Login bad creds');
                     toast.warning(response.data.message);
-
                 } else if (response.status === 403) {
                     //validation error
                     console.log('Validation error: ' + response.data.validation_errors);
                     setLogin({ ...loginInput, error_list: response.data.validation_errors });
                     toast.error('Login failed in validation!');
                 }
-
             }).catch((error) => {
                 console.log('Login catch error: ' + error);
                 toast.error('Login failed!');
             });
-
         }).catch((error) => {
             //Error gettinf CSRF token?
             console.log('CSRF: ' + error);

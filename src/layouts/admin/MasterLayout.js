@@ -8,7 +8,7 @@ import SideBar from "./SideBar";
 import Footer from "./Footer";
 
 import routes from "../../routes/routes";
-import { Route, Routes, Navigate, Redirect } from "react-router-dom";
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 // import Redirect from 'react-router';
 
 
@@ -33,17 +33,16 @@ const MasterLayout = () => {
                             {
                                 routes.map((route, index) => {
                                     return (
-                                        route.element && (
-                                            <Route
-                                                key={index}
-                                                path={route.path}
-                                                exact={route.exact}
-                                                name={route.name}
-                                                render={(props) => (
-                                                    <route.element {...props} />
-                                                )}
-                                            />
-                                        )
+                                        <Route
+                                            key={index}
+                                            path={route.path}
+                                            exact={route.exact}
+                                            name={route.name}
+                                            render={(props) => (
+                                                <route.element {...props} />
+                                            )}
+                                            element={route.element}
+                                        />
                                     );
                                 })
                             }
