@@ -5,7 +5,6 @@ import MasterLayout from './layouts/admin/MasterLayout';
 import Home from './components/frontend/Home';
 import Login from './components/frontend/auth/Login';
 import Register from './components/frontend/auth/Register';
-import PrivateRoute from './PrivateRoute';
 import PrivateAdminRoute from './PrivateAdminRoute';
 import Page403 from './components/errors/Page403';
 import Page404 from './components/errors/Page404';
@@ -35,20 +34,32 @@ function App() {
       <Router>
         <Routes>
 
-          <Route exact path='/' name='Home' render={(props) => <Home {...props} />} element={<Home />} />
+          <Route exact path='/'
+            name='Home'
+            // render={(props) => <Home {...props} />}
+            element={<Home />}
+          />
 
-          <Route path='/403' name='Page403' render={(props) => <Page403 {...props} />} element={<Page403 />} />
-          <Route path='/404' name='Page404' render={(props) => <Page404 {...props} />} element={<Page404 />} />
+          <Route path='/403'
+            name='Page403'
+            // render={(props) => <Page403 {...props} />}
+            element={<Page403 />}
+          />
+          <Route path='/404'
+            name='Page404'
+            // render={(props) => <Page404 {...props} />}
+            element={<Page404 />}
+          />
 
           {/* if user is authenticated, redirect from login and register to home till they logout */}
           <Route path='/login'
             name='Login'
-            render={(props) => !getAuth() ? <Login {...props} /> : <Navigate to='/' />}
+            // render={(props) => !getAuth() ? <Login {...props} /> : <Navigate to='/' />}
             element={!getAuth() ? <Login /> : <Navigate to='/' />}
           />
           <Route path='/register'
             name='Register'
-            render={(props) => !getAuth() ? <Register {...props} /> : <Navigate to='/' />}
+            // render={(props) => !getAuth() ? <Register {...props} /> : <Navigate to='/' />}
             element={!getAuth() ? <Register /> : <Navigate to='/' />}
           />
 
@@ -61,8 +72,22 @@ function App() {
           */}
 
           {/* <Route path='/admin/*' name='Admin' render={(props) => <MasterLayout {...props} />} element={<MasterLayout />} /> */}
-          <Route path='/admin/*' element={<PrivateAdminRoute />}>
-            <Route path='/admin/*' name='Admin' render={(props) => <MasterLayout {...props} />} element={<MasterLayout />} />
+          <Route path='/admin' element={<PrivateAdminRoute />}>
+            <Route path='/admin'
+              name='Admin'
+              render={(props) => <MasterLayout {...props} />}
+              element={<MasterLayout />}
+            />
+            {/* <Route path='/admin/dashboard'
+              name='Dashboard'
+              render={(props) => <Dashboard {...props} />}
+              element={<Dashboard />}
+            />
+            <Route path='/admin/profile'
+              name='Profile'
+              render={(props) => <Profile {...props} />}
+              element={<Profile />}
+            /> */}
           </Route>
 
         </Routes>
