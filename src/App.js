@@ -10,6 +10,9 @@ import Page403 from './components/errors/Page403';
 import Page404 from './components/errors/Page404';
 
 import axios from 'axios';
+import Dashboard from './components/admin/Dashboard';
+import Profile from './components/admin/Profile';
+import Users from './components/admin/Users';
 
 axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -36,18 +39,15 @@ function App() {
 
           <Route exact path='/'
             name='Home'
-            // render={(props) => <Home {...props} />}
             element={<Home />}
           />
 
           <Route path='/403'
             name='Page403'
-            // render={(props) => <Page403 {...props} />}
             element={<Page403 />}
           />
           <Route path='/404'
             name='Page404'
-            // render={(props) => <Page404 {...props} />}
             element={<Page404 />}
           />
 
@@ -63,31 +63,19 @@ function App() {
             element={!getAuth() ? <Register /> : <Navigate to='/' />}
           />
 
-          {/* if user isn't authenticated, redirect to login */}
-
-          {/* 
-            <Route exact path='/' element={<PrivateRoute />}>
-              <Route exact path='/' element={<Home />} />
-            </Route> 
-          */}
-
           {/* <Route path='/admin/*' name='Admin' render={(props) => <MasterLayout {...props} />} element={<MasterLayout />} /> */}
           <Route path='/admin' element={<PrivateAdminRoute />}>
-            <Route path='/admin'
-              name='Admin'
-              render={(props) => <MasterLayout {...props} />}
-              element={<MasterLayout />}
-            />
-            {/* <Route path='/admin/dashboard'
-              name='Dashboard'
-              render={(props) => <Dashboard {...props} />}
-              element={<Dashboard />}
-            />
-            <Route path='/admin/profile'
-              name='Profile'
-              render={(props) => <Profile {...props} />}
-              element={<Profile />}
-            /> */}
+
+            <Route element={<MasterLayout />}>
+
+              <Route index element={<Dashboard />} />
+              <Route path="/admin/dashboard" element={<Dashboard />} />
+              <Route path="/admin/profile" element={<Profile />} />
+              <Route path="/admin/users" element={<Users />} />
+
+            </Route>
+            <Route path="/admin/*" element={<Page404 />} />
+
           </Route>
 
         </Routes>

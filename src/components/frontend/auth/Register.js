@@ -37,15 +37,7 @@ function Register() {
         }
 
         axios.get('/sanctum/csrf-cookie').then((CSRFresponse) => {
-
-            console.log('CSRF: ' + JSON.stringify(CSRFresponse.data));
-
             axios.post('/api/register', data).then((response) => {
-
-                // console.log('token: ' + JSON.stringify(response.data.token));
-                // console.log('user: ' + JSON.stringify(response.data.user));
-                // console.log('name: ' + JSON.stringify(response.data.user.name));
-
                 if (response.status === 200) {
 
                     if (response.data.validation_errors && response.data.validation_errors.length) {
@@ -69,14 +61,12 @@ function Register() {
                     }
 
                 } else {
-
                     setRegister({ ...registerInput, error_list: response.data.validation_errors });
                     toast.error('Register failed!');
-
                 }
 
             }).catch((error) => {
-                console.log('Register: ' + error);
+                console.log('Register: ' + error + ' ' + error.response + ' ' + error.response.data);
                 toast.error('Register failed!');
             });
 
