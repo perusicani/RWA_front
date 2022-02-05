@@ -19,6 +19,11 @@ const SideBar = () => {
                         <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
                         Profile
                     </Link >
+
+                    <Link className="nav-link" to="/admin/users">
+                        <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
+                        Users
+                    </Link >
                 </div>
             </div>
             <div className="sb-sidenav-footer">

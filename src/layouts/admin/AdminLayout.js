@@ -16,7 +16,7 @@ import { Route, Routes, Link, Outlet } from "react-router-dom";
 // import Redirect from 'react-router';
 
 
-const MasterLayout = () => {
+const AdminLayout = () => {
 
     return (
         <div className="sb-nav-fixed" >
@@ -29,7 +29,7 @@ const MasterLayout = () => {
                 <div id="layoutSidenav_content">
                     {/* <main>
                         <Routes>
-                            <Route element={<MasterLayout />}>
+                            <Route element={<AdminLayout />}>
 
                                 <Route index element={<Dashboard />} />
                                 <Route path="/dashboard" element={<Dashboard />} />
@@ -51,4 +51,4 @@ const MasterLayout = () => {
 }
 
 
-export default MasterLayout;
+export default AdminLayout;
