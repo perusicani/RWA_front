@@ -1,46 +1,60 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
+import axios from "axios";
+
+import Dropdown from 'react-bootstrap/Dropdown';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import Container from 'react-bootstrap/Container';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const NavBar = () => {
 
+    const navigate = useNavigate();
+
+    const logoutSubmit = (event) => {
+        event.preventDefault();
+
+        axios.post('/api/logout').then(response => {
+            if (response.status === 200) {
+                localStorage.removeItem('auth_token');
+                localStorage.removeItem('auth_name');
+
+                toast.success(response.data.message);
+
+                setTimeout(() => {
+                    navigate('/');
+                }, 2500);
+            }
+        }).catch((error) => {
+            console.log('Logout: ' + error);
+            toast.error('Logout failed!');
+        });
+    }
+
     return (
-        <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <Link className="navbar-brand ps-3" to="/admin">
-                Admin panel
-            </Link>
-            <button className="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i className="fas fa-bars"></i></button>
-            <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div className="input-group">
-                    <input className="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button className="btn btn-primary" id="btnNavbarSearch" type="button"><i className="fas fa-search"></i></button>
-                </div>
-            </form>
-            <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li className="nav-item dropdown">
-                    <Link className="nav-link dropdown-toggle" id="navbarDropdown" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i className="fas fa-user fa-fw"></i>
-                    </Link>
-                    <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li>
-                            <Link className="dropdown-item" to="#!">
-                                Settings
-                            </Link>
-                        </li>
-                        <li>
-                            <Link className="dropdown-item" to="#!">
-                                Activity Log
-                            </Link>
-                        </li>
-                        <li><hr className="dropdown-divider" /></li>
-                        <li>
-                            <Link className="dropdown-item" to="#!">
-                                Logout
-                            </Link>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
+        <Navbar className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <ToastContainer />
+            <Container>
+                <Navbar.Brand href="/admin">Admin panel</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        {/* <Nav.Link href="#home">Home</Nav.Link> */}
+                        <NavDropdown title="More actions" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="/">Back to FrontEnd</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item style={{ color: 'red' }} onClick={logoutSubmit}>Logout</NavDropdown.Item>
+                        </NavDropdown>
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
     );
 }
 

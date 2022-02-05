@@ -8,8 +8,10 @@ const FrontendLayout = () => {
 
     return (
         <div className="sb-nav-fixed" >
-            <NavBar />
-            <main style={{ padding: '1rem 0' }}>
+            <div>
+                <NavBar />
+            </div>
+            <main style={{ padding: 30 }}>
                 <Outlet />
             </main>
             {/* <Footer /> */}

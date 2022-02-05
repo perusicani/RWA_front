@@ -1,19 +1,22 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
+import axios from 'axios';
+
+import PrivateAdminRoute from './PrivateAdminRoute';
 import AdminLayout from './layouts/admin/AdminLayout';
+import AdminDashboard from './components/admin/AdminDashboard';
+import AdminProfile from './components/admin/AdminProfile';
+import AdminUsers from './components/admin/AdminUsers';
+import AdminTasks from './components/admin/AdminTasks';
+
+import FrontendLayout from './layouts/frontend/FrontendLayout';
 import Home from './components/frontend/Home';
 import Login from './components/frontend/auth/Login';
 import Register from './components/frontend/auth/Register';
-import PrivateAdminRoute from './PrivateAdminRoute';
 import Page403 from './components/errors/Page403';
 import Page404 from './components/errors/Page404';
 
-import axios from 'axios';
-import Dashboard from './components/admin/Dashboard';
-import Profile from './components/admin/Profile';
-import Users from './components/admin/Users';
-import FrontendLayout from './layouts/frontend/FrontendLayout';
 
 axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -39,31 +42,16 @@ function App() {
         <Routes>
 
 
-          <Route path='/403'
-            name='Page403'
-            element={<Page403 />}
-          />
-          <Route path='/404'
-            name='Page404'
-            element={<Page404 />}
-          />
+          <Route path='/403' name='Page403' element={<Page403 />} />
+          <Route path='/404' name='Page404' element={<Page404 />} />
 
 
           <Route element={<FrontendLayout />}>
-            <Route index
-              name='Home'
-              element={<Home />}
-            />
+            <Route index name='Home' element={<Home />} />
 
             {/* if user is authenticated, redirect from login and register to home till they logout */}
-            <Route path='/login'
-              name='Login'
-              element={!getAuth() ? <Login /> : <Navigate to='/' />}
-            />
-            <Route path='/register'
-              name='Register'
-              element={!getAuth() ? <Register /> : <Navigate to='/' />}
-            />
+            <Route path='/login' name='Login' element={!getAuth() ? <Login /> : <Navigate to='/' />} />
+            <Route path='/register' name='Register' element={!getAuth() ? <Register /> : <Navigate to='/' />} />
 
           </Route>
 
@@ -74,20 +62,18 @@ function App() {
             <Route element={<AdminLayout />}>
 
               {/* routes that should render inside outlet */}
-              <Route index element={<Dashboard />} />
-              <Route path="/admin/dashboard" element={<Dashboard />} />
-              <Route path="/admin/profile" element={<Profile />} />
-              <Route path="/admin/users" element={<Users />} />
+              <Route index element={<AdminDashboard />} />
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route path="/admin/profile" element={<AdminProfile />} />
+              <Route path="/admin/users" element={<AdminUsers />} />
+              <Route path="/admin/tasks" element={<AdminTasks />} />
 
             </Route>
             <Route path="/admin/*" element={<Page404 />} />
 
           </Route>
 
-          <Route path='/*'
-            name='Page404'
-            element={<Page404 />}
-          />
+          <Route path='/*' name='Page404' element={<Page404 />} />
         </Routes>
       </Router>
     </div>

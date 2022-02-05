@@ -8,21 +8,28 @@ const SideBar = () => {
         <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div className="sb-sidenav-menu">
                 <div className="nav">
-                    <div className="sb-sidenav-menu-heading">Core</div>
+                    <div className="sb-sidenav-menu-heading">Analytics</div>
 
                     <Link className="nav-link" to="/admin/dashboard">
                         <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </Link >
 
+                    <div className="sb-sidenav-menu-heading">Personal</div>
                     <Link className="nav-link" to="/admin/profile">
                         <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
                         Profile
                     </Link >
 
+                    <div className="sb-sidenav-menu-heading">Moderation</div>
                     <Link className="nav-link" to="/admin/users">
                         <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
                         Users
+                    </Link >
+
+                    <Link className="nav-link" to="/admin/tasks">
+                        <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
+                        Tasks
                     </Link >
                 </div>
             </div>

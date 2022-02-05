@@ -53,12 +53,10 @@ function Login() {
                             navigate('/');
                         }, 2500);
                     }
-
-
                 } else if (response.status === 401) {
                     //bad creds error
                     console.log('Login bad creds');
-                    toast.warning(response.data.message);
+                    toast.error('Bad credentials!');
                 } else if (response.status === 403) {
                     //validation error
                     console.log('Validation error: ' + response.data.validation_errors);
@@ -97,7 +95,7 @@ function Login() {
                                             value={loginInput.email}
                                             onChange={handleInput}
                                         />
-                                        <span>{loginInput.error_list ? loginInput.error_list.email ?? '' : ''}</span>
+                                        <span>{loginInput.error_list.email}</span>
                                     </div>
                                     <div className='form-group mb-3'>
                                         <label>Password</label>
@@ -108,7 +106,7 @@ function Login() {
                                             value={loginInput.password}
                                             onChange={handleInput}
                                         />
-                                        <span>{loginInput.error_list ? loginInput.error_list.password ?? '' : ''}</span>
+                                        <span>{loginInput.error_list.password}</span>
                                     </div>
 
                                     <div className='form-group mb-3'>

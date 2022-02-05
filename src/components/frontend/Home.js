@@ -1,7 +1,11 @@
 import React from 'react';
-import NavBar from '../../layouts/frontend/NavBar';
 
 function Home() {
+
+    // Something like a welcome page
+    // Explanation for how anything functions
+    // Here to look pretty
+
 
     return (
         <div>
