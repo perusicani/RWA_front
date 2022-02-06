@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import axios from 'axios';
+
 import { ToastContainer, toast } from 'react-toastify'; //here, not in updatemodal since we need it shown in parent
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -25,21 +27,20 @@ class AdminTasks extends Component {
     //call fetch data on mounted component
     //life cycle method
     componentDidMount() {
-        // this.getNotesList();
+        this.getTasks();
     }
 
     //fetching data
-    //get notes list
-    // getNotesList = () => {
-    //     let self = this;
-    //     axios.get('/get/note/list').then(function (response) {
-    //         // console.log(response.data);
-    //         //set response data to state
-    //         self.setState({
-    //             notes: response.data,
-    //         });
-    //     });
-    // }
+    getTasks = () => {
+        let self = this;
+        axios.get('/api/tasks').then(function (response) {
+            console.log(response.data);
+            //set response data to state
+            self.setState({
+                tasks: response.data,
+            });
+        });
+    }
 
     dummyData = [
         {
@@ -60,7 +61,7 @@ class AdminTasks extends Component {
             <>
                 <Breadcrumb>
                     <Breadcrumb.Item href="/admin">Admin</Breadcrumb.Item>
-                    <Breadcrumb.Item active>Users</Breadcrumb.Item>
+                    <Breadcrumb.Item active>Tasks</Breadcrumb.Item>
                 </Breadcrumb>
                 <div className="container">
                     <ToastContainer />
