@@ -22,7 +22,7 @@ class Task extends Component {
                     <Card.Text>{this.props.task.description}</Card.Text>
 
                     {/* <Button variant="primary">Go somewhere</Button> */}
-                    <TaskActions taskId={this.props.task.id} />
+                    <TaskActions task={this.props.task} />
                 </Card.Body>
             </Card>
             // <Accordion flush style={{ margin: 15 }}>

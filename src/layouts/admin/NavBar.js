@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-import Dropdown from 'react-bootstrap/Dropdown';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
@@ -38,7 +37,7 @@ const NavBar = () => {
     }
 
     return (
-        <Navbar className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <Navbar className="sb-topnav navbar navbar-expand navbar-dark bg-dark flex">
             <ToastContainer />
             <Container>
                 <Navbar.Brand href="/admin">Admin panel</Navbar.Brand>

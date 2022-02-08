@@ -56,7 +56,7 @@ class AdminTasks extends Component {
 
     }
     handlePageClick = (event) => {
-        console.log(event.selected);
+        // console.log(event.selected);
         this.getTasks(event.selected + 1);
     }
 
@@ -72,7 +72,7 @@ class AdminTasks extends Component {
                     <Breadcrumb.Item href="/admin">Admin</Breadcrumb.Item>
                     <Breadcrumb.Item active>Tasks</Breadcrumb.Item>
                 </Breadcrumb>
-                <div className="container">
+                <div className="container" >
                     <ToastContainer />
                     <div className="column">
 

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 
-import NavBar from '../../../layouts/frontend/NavBar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -20,9 +19,7 @@ function Login() {
     });
 
     const handleInput = (event) => {
-
         setLogin({ ...loginInput, [event.target.name]: event.target.value });
-
     }
 
     const loginSubmit = (event) => {
