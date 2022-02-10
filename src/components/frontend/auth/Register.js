@@ -52,6 +52,7 @@ function Register() {
                         // once the register passes, get token and store to local storage
                         localStorage.setItem('auth_token', response.data.token);
                         localStorage.setItem('auth_name', response.data.user.name);
+                        localStorage.setItem('user_id', response.data.user.id);
 
                         toast.success(response.data.message);
 

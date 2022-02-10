@@ -22,6 +22,7 @@ function NavBar() {
             if (response.status === 200) {
                 localStorage.removeItem('auth_token');
                 localStorage.removeItem('auth_name');
+                localStorage.removeItem('user_id');
 
                 toast.success(response.data.message);
 
@@ -52,6 +53,8 @@ function NavBar() {
         {/* logout */ }
         AuthButtons = (
             <>
+                <Nav.Item> <Nav.Link href="/tasks">Tasks</Nav.Link> </Nav.Item>
+                <Nav.Item> <Nav.Link href="/profile">Profile</Nav.Link> </Nav.Item>
                 <Button type='button' onClick={logoutSubmit} className="nav-link btn btn-danger btn-sm text-white" >Logout</Button>
             </>
         );

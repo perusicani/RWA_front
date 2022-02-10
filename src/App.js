@@ -16,6 +16,11 @@ import Login from './components/frontend/auth/Login';
 import Register from './components/frontend/auth/Register';
 import Page403 from './components/errors/Page403';
 import Page404 from './components/errors/Page404';
+import TaskCreate from './components/task_components/task_actions/TaskCreate';
+import PrivateRoute from './PrivateRoute';
+import Tasks from './components/frontend/Tasks';
+import TaskUpdate from './components/task_components/task_actions/TaskUpdate';
+import { propTypes } from 'react-bootstrap/esm/Image';
 
 
 axios.defaults.baseURL = "http://localhost:8000";
@@ -53,6 +58,11 @@ function App() {
             <Route path='/login' name='Login' element={!getAuth() ? <Login /> : <Navigate to='/' />} />
             <Route path='/register' name='Register' element={!getAuth() ? <Register /> : <Navigate to='/' />} />
 
+            <Route path='/' element={<PrivateRoute />} >
+              <Route path='/tasks' name='Tasks' element={<Tasks />}></Route>
+              <Route path='/tasks/create' name='TaskCreate' element={<TaskCreate />}></Route>
+              <Route path='/tasks/update' name='TaskUpdate' element={<TaskUpdate />} /*render={(props) => <TaskUpdate {...props} />}*/ ></Route>
+            </Route>
           </Route>
 
           {/* protected route by admin role check */}

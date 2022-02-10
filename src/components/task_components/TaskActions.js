@@ -1,57 +1,59 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
+import axios from 'axios';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import TaskDeleteModal from './task_modals/TaskDeleteModal';
 
-class TaskActions extends Component {
+import { Link } from 'react-router-dom';
 
-    constructor(props) {
-        super(props);
+function TaskActions(props) {
 
-        // this.state = {
-        //     currentNoteTitle: null,
-        //     currentNoteDescription: null,
-        //     currentNoteTag: null,
-        // }
+    const [showDelete, setShowDelete] = useState(false);
+
+    const handleCloseDelete = () => setShowDelete(false);
+    const handleShowDelete = () => setShowDelete(true);
+
+    const deleteTask = () => {
+        axios.delete('/api/tasks/' + props.task.id)
+            .then((response) => {
+                console.log(response);
+                toast.success(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+                toast.error(error);
+            });
+        setShowDelete(false);
     }
 
-    //getting individual note data
-    // getNoteDetails = (id) => {
-    //     axios.post('/get/note/details', {
-    //         taskId: id,
-    //     }).then((response) => {
-    //         // console.log(response.data);
-    //         this.setState({
-    //             currentNoteTitle: response.data.note_title,
-    //             currentNoteDescription: response.data.note_description,
-    //             currentNoteTag: response.data.note_tag,
-    //         });
-    //     });
+    return (
+        <div className="btn-group" role="group">
+            <ToastContainer />
+
+            <Link to={'/tasks/update?id=' + props.task.id} className="btn btn-info" >Update</Link>
+
+            <Button type="button" className="btn btn-danger" onClick={handleShowDelete} >Delete</Button>
+
+            <Modal show={showDelete} onHide={handleCloseDelete}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Delete Task?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you wish to delete this Task?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseDelete}>
+                        No
+                    </Button>
+                    <Button variant="danger" onClick={deleteTask}>
+                        Delete
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </div>
+    );
     // }
-
-    // {/* <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={"#viewModal" + this.props.taskId}
-    // // onClick={() => { this.getNoteDetails(this.props.taskId) }}
-    // >
-    //     View
-    // </button> */}
-
-    //rendering component
-    render() {
-        return (
-            <div className="btn-group" role="group">
-                {/* <Button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={"#viewModal" + this.props.taskId}>View</Button> */}
-                {/* the modal is hidden until called */}
-                {/* pass through the note id and data */}
-                {/* <ViewModal modalId={this.props.taskId} noteDetails={this.state} /> */}
-
-                <Button type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target={"#taskUpdateModal" + this.props.task.id}>Update</Button>
-                {/* <UpdateModal modalId={this.props.taskId} noteDetails={this.state} /> */}
-
-                <Button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target={"#taskDeleteModal" + this.props.task.id}>Delete</Button>
-                <TaskDeleteModal modalId={this.props.task.id} task={this.props.task} />
-            </div>
-        );
-    }
 }
 
 export default TaskActions;
