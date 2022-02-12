@@ -20,7 +20,7 @@ import TaskCreate from './components/task_components/task_actions/TaskCreate';
 import PrivateRoute from './PrivateRoute';
 import Tasks from './components/frontend/Tasks';
 import TaskUpdate from './components/task_components/task_actions/TaskUpdate';
-import { propTypes } from 'react-bootstrap/esm/Image';
+import Profile from './components/frontend/Profile';
 
 
 axios.defaults.baseURL = "http://localhost:8000";
@@ -61,7 +61,8 @@ function App() {
             <Route path='/' element={<PrivateRoute />} >
               <Route path='/tasks' name='Tasks' element={<Tasks />}></Route>
               <Route path='/tasks/create' name='TaskCreate' element={<TaskCreate />}></Route>
-              <Route path='/tasks/update' name='TaskUpdate' element={<TaskUpdate />} /*render={(props) => <TaskUpdate {...props} />}*/ ></Route>
+              <Route path='/tasks/update' name='TaskUpdate' element={<TaskUpdate />} ></Route>
+              <Route path='/profile' name='Profile' element={<Profile />} ></Route>
             </Route>
           </Route>
 

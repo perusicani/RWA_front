@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactPaginate from 'react-paginate';
 
+import Loader from 'react-spinners/BeatLoader';
+
 import UserCard from '../frontend/user_component/UserCard';
 
 class AdminUsers extends Component {
@@ -72,28 +74,34 @@ class AdminUsers extends Component {
                 <div className="container">
                     <ToastContainer />
                     <div className="column">
+                        {
+                            Users.length > 0 ?
 
-                        {Users.length > 0 && Users}
+                                <>
+                                    {Users.length > 0 && Users}
 
-                        <ReactPaginate
-                            breakLabel="..."
-                            nextLabel="next >"
-                            onPageChange={this.handlePageClick}
-                            pageRangeDisplayed={5}
-                            pageCount={this.state.pageCount}
-                            previousLabel="< previous"
-                            renderOnZeroPageCount={null}
-                            containerClassName='pagination'
-                            pageClassName='page-item'
-                            pageLinkClassName='page-link'
-                            previousClassName='page-item'
-                            previousLinkClassName='page-link'
-                            nextClassName='page-item'
-                            nextLinkClassName='page-link'
-                            breakClassName='page-item'
-                            breakLinkClassName='page-link'
-                            activeClassName='active'
-                        />
+                                    < ReactPaginate
+                                        breakLabel="..."
+                                        nextLabel="next >"
+                                        onPageChange={this.handlePageClick}
+                                        pageRangeDisplayed={5}
+                                        pageCount={this.state.pageCount}
+                                        previousLabel="< previous"
+                                        renderOnZeroPageCount={null}
+                                        containerClassName='pagination'
+                                        pageClassName='page-item'
+                                        pageLinkClassName='page-link'
+                                        previousClassName='page-item'
+                                        previousLinkClassName='page-link'
+                                        nextClassName='page-item'
+                                        nextLinkClassName='page-link'
+                                        breakClassName='page-item'
+                                        breakLinkClassName='page-link'
+                                        activeClassName='active'
+                                    />
+                                </>
+                                : <Loader />
+                        }
                     </div>
                 </div>
             </>

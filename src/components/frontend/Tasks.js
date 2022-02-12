@@ -5,12 +5,14 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify'; //here, not in updatemodal since we need it shown in parent
 import 'react-toastify/dist/ReactToastify.css';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import Button from 'react-bootstrap/Button';
 import ReactPaginate from 'react-paginate';
 
 import { Link } from 'react-router-dom';
 
 import Task from '../task_components/Task';
+import Loader from 'react-spinners/BeatLoader';
+
+//here show update only if task.user_id == our user_id
 
 class Tasks extends Component {
     constructor(props) {
@@ -32,7 +34,13 @@ class Tasks extends Component {
 
         let self = this;
 
-        axios.get(`/api/tasks?page=${pageNumber}`)
+        axios.get(`/api/tasks?page=${pageNumber}`,
+            // {
+            //     onDownloadProgress: (progressEvent) => {
+            //         console.log('event: ', progressEvent);
+            //     }
+            // }
+        )
             .then(function (response) {
                 self.setState({
                     tasks: response.data.tasks.data,
@@ -64,28 +72,36 @@ class Tasks extends Component {
                 <div className="container" >
                     <ToastContainer />
                     <div className="column">
+                        <div>
+                            {
+                                Tasks.length > 0 ?
+                                    <>
+                                        {Tasks.length > 0 && Tasks}
+                                        <ReactPaginate
+                                            breakLabel="..."
+                                            nextLabel="next >"
+                                            onPageChange={this.handlePageClick}
+                                            pageRangeDisplayed={5}
+                                            pageCount={this.state.pageCount}
+                                            previousLabel="< previous"
+                                            renderOnZeroPageCount={null}
+                                            containerClassName='pagination'
+                                            pageClassName='page-item'
+                                            pageLinkClassName='page-link'
+                                            previousClassName='page-item'
+                                            previousLinkClassName='page-link'
+                                            nextClassName='page-item'
+                                            nextLinkClassName='page-link'
+                                            breakClassName='page-item'
+                                            breakLinkClassName='page-link'
+                                            activeClassName='active'
+                                        />
+                                    </>
+                                    :
+                                    <Loader />
+                            }
+                        </div>
 
-                        {Tasks.length > 0 && Tasks}
-
-                        <ReactPaginate
-                            breakLabel="..."
-                            nextLabel="next >"
-                            onPageChange={this.handlePageClick}
-                            pageRangeDisplayed={5}
-                            pageCount={this.state.pageCount}
-                            previousLabel="< previous"
-                            renderOnZeroPageCount={null}
-                            containerClassName='pagination'
-                            pageClassName='page-item'
-                            pageLinkClassName='page-link'
-                            previousClassName='page-item'
-                            previousLinkClassName='page-link'
-                            nextClassName='page-item'
-                            nextLinkClassName='page-link'
-                            breakClassName='page-item'
-                            breakLinkClassName='page-link'
-                            activeClassName='active'
-                        />
                     </div>
                 </div>
             </>

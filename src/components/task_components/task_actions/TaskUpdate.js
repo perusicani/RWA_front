@@ -46,7 +46,6 @@ function TaskUpdate() {
         // GET TASK ID
         const queryParams = new URLSearchParams(window.location.search);
         const id = queryParams.get('id');
-        // this.setState({ id: id });
         setId({ id: id });
 
         // GET TASK FROM DB
@@ -80,7 +79,7 @@ function TaskUpdate() {
             status: 0,
         };
 
-        var user_id = userId.value;
+        var user_id = userId.userId;
 
         axios.post('/api/tasks', { task: task, user_id: user_id })
             .then(

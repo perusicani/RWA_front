@@ -54,7 +54,9 @@ function NavBar() {
         AuthButtons = (
             <>
                 <Nav.Item> <Nav.Link href="/tasks">Tasks</Nav.Link> </Nav.Item>
-                <Nav.Item> <Nav.Link href="/profile">Profile</Nav.Link> </Nav.Item>
+
+                {/* <Link to={'/tasks/update?id=' + props.task.id} className="btn btn-info" >Update</Link> */}
+                <Nav.Item> <Nav.Link href={'/profile?id=' + localStorage.getItem('user_id')}>Profile</Nav.Link> </Nav.Item>
                 <Button type='button' onClick={logoutSubmit} className="nav-link btn btn-danger btn-sm text-white" >Logout</Button>
             </>
         );

@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 
 import TaskActions from './TaskActions';
+import { Link } from 'react-router-dom';
 
 class Task extends Component {
 
@@ -20,24 +21,16 @@ class Task extends Component {
                 <Card.Body>
                     <Card.Title>{this.props.task.title}</Card.Title>
                     <Card.Text>{this.props.task.description}</Card.Text>
+                    <Card.Text>
+                        <Link className='btn btn-primary' to={'/profile?id=' + this.props.task.user_id}>
+                            Creators profile
+                        </Link>
+                    </Card.Text>
 
                     {/* <Button variant="primary">Go somewhere</Button> */}
                     <TaskActions task={this.props.task} />
                 </Card.Body>
             </Card>
-            // <Accordion flush style={{ margin: 15 }}>
-            //     <Accordion.Item eventKey={this.props.task.id}>
-            //         <Accordion.Header>
-            //             {this.props.task.name}
-            //         </Accordion.Header>
-            //         <Accordion.Body>
-            //             {this.props.task.description}
-            //         </Accordion.Body>
-            //         <Accordion.Collapse>
-            //             <TaskActions taskId={this.props.task.id} />
-            //         </Accordion.Collapse>
-            //     </Accordion.Item>
-            // </Accordion>
 
         );
     }
