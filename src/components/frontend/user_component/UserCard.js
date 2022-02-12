@@ -19,7 +19,7 @@ class UserCard extends Component {
                     <Card.Title>{this.props.user.name}</Card.Title>
                     <Card.Text>{this.props.user.description}</Card.Text>
 
-                    <UserActions taskId={this.props.user.id} />
+                    <UserActions userId={this.props.user.id} />
 
                 </Card.Body>
             </Card>

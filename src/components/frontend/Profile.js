@@ -7,6 +7,8 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Loader from 'react-spinners/BeatLoader';
 
+import { Link } from 'react-router-dom';
+
 function Profile() {
 
     //About me
@@ -17,28 +19,31 @@ function Profile() {
     const [id, setId] = useState('');
     const [user, setUser] = useState();
 
+    const [error, setError] = useState(false);
+
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
         const id = queryParams.get('id');
         // this.setState({ id: id });
         setId({ id: id });
 
-        axios.get('/api/users/' + id,
-            // {
-            //     onDownloadProgress: (progressEvent) => {
-            //         let percentCompleted = Math.floor(progressEvent.loaded / progressEvent.total * 100);
-            //         console.log('completed: ', percentCompleted)
-            //     }
-            // }
-        )
+        axios.get('/api/users/' + id)
             .then((response) => {
                 console.log(response);
                 setUser({ user: response.data.user });
             })
             .catch((error) => {
                 console.log(error);
+                setError({ error: true });
             });
     }, []);
+
+
+    if (error.error) {
+        return (
+            <h1>Error</h1>
+        );
+    }
 
     return (
         <>
@@ -63,6 +68,7 @@ function Profile() {
                     </div>
                 </ListGroup>
             </Card>
+            <Link className='btn btn-info' to={'/profile/update?id=' + localStorage.getItem('user_id')} >Edit profile</Link>
         </>
     );
 

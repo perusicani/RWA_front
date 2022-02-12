@@ -21,6 +21,7 @@ import PrivateRoute from './PrivateRoute';
 import Tasks from './components/frontend/Tasks';
 import TaskUpdate from './components/task_components/task_actions/TaskUpdate';
 import Profile from './components/frontend/Profile';
+import ProfileUpdate from './components/frontend/profile_component/ProfileUpdate';
 
 
 axios.defaults.baseURL = "http://localhost:8000";
@@ -63,6 +64,7 @@ function App() {
               <Route path='/tasks/create' name='TaskCreate' element={<TaskCreate />}></Route>
               <Route path='/tasks/update' name='TaskUpdate' element={<TaskUpdate />} ></Route>
               <Route path='/profile' name='Profile' element={<Profile />} ></Route>
+              <Route path='/profile/update' name='ProfileUpdate' element={<ProfileUpdate />} ></Route>
             </Route>
           </Route>
 

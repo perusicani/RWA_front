@@ -53,7 +53,6 @@ function TaskActions(props) {
             </Modal>
         </div>
     );
-    // }
 }
 
 export default TaskActions;

@@ -1,56 +1,75 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import axios from 'axios';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
-class UserActions extends Component {
+import { Link } from 'react-router-dom';
 
-    constructor(props) {
-        super(props);
+function UserActions(props) {
 
-        // this.state = {
-        //     currentNoteTitle: null,
-        //     currentNoteDescription: null,
-        //     currentNoteTag: null,
-        // }
+    const [showDelete, setShowDelete] = useState(false);
+
+    const handleCloseDelete = () => setShowDelete(false);
+    const handleShowDelete = () => setShowDelete(true);
+
+    const deleteUser = () => {
+        axios.delete('/api/users/' + props.userId)
+            .then((response) => {
+                console.log(response);
+                toast.success(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+                toast.error(error);
+            });
+        setShowDelete(false);
     }
 
-    //getting individual note data
-    // getNoteDetails = (id) => {
-    //     axios.post('/get/note/details', {
-    //         taskId: id,
-    //     }).then((response) => {
-    //         // console.log(response.data);
-    //         this.setState({
-    //             currentNoteTitle: response.data.note_title,
-    //             currentNoteDescription: response.data.note_description,
-    //             currentNoteTag: response.data.note_tag,
-    //         });
-    //     });
-    // }
+    return (
+        <div className="btn-group" role="group">
+            <ToastContainer />
 
-    // {/* <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={"#viewModal" + this.props.taskId}
-    // // onClick={() => { this.getNoteDetails(this.props.taskId) }}
-    // >
-    //     View
-    // </button> */}
+            <Link to={'/profile?id=' + props.userId} className="btn btn-primary" >view</Link>
 
-    //rendering component
-    render() {
-        return (
-            <div className="btn-group" role="group">
-                <Button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={"#viewModal" + this.props.userId}>View</Button>
-                {/* the modal is hidden until called */}
-                {/* pass through the note id and data */}
-                {/* <ViewModal modalId={this.props.userId} noteDetails={this.state} /> */}
+            <Link to={'/profile/update?id=' + props.userId} className="btn btn-info" >Update</Link>
 
-                <Button type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target={"#updateModal" + this.props.userId}>Update</Button>
-                {/* <UpdateModal modalId={this.props.userId} noteDetails={this.state} /> */}
+            <Button type="button" className="btn btn-danger" onClick={handleShowDelete} >Delete</Button>
 
-                <Button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target={"#deleteModal" + this.props.userId}>Delete</Button>
-                {/* <DeleteModal modalId={this.props.userId} /> */}
-            </div>
-        );
-    }
+            <Modal show={showDelete} onHide={handleCloseDelete}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Delete User?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you wish to delete this User?</Modal.Body>
+                <Modal.Body>This action is irreversable, so think this through!</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseDelete}>
+                        No
+                    </Button>
+                    <Button variant="danger" onClick={deleteUser}>
+                        Delete
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </div>
+        // <div className="btn-group" role="group">
+        //     <Button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={"#viewModal" + props.userId}>View</Button>
+        //     {/* the modal is hidden until called */}
+        //     {/* pass through the note id and data */}
+        //     {/* <ViewModal modalId={props.userId} noteDetails={state} /> */}
+
+        //     <Button type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target={"#updateModal" + props.userId}>Update</Button>
+        //     {/* <UpdateModal modalId={props.userId} noteDetails={state} /> */}
+
+        //     <Button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target={"#deleteModal" + props.userId}>Delete</Button>
+        //     {/* <DeleteModal modalId={props.userId} /> */}
+        // </div>
+    );
+
 }
 
 export default UserActions;
