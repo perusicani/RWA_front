@@ -34,7 +34,8 @@ function TaskCreate(props) {
         setDescription({ [event.target.name]: event.target.value });
     }
 
-    const createTask = () => {
+    const createTask = (event) => {
+        event.preventDefault();
 
 
         var task = {
