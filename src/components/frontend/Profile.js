@@ -45,6 +45,14 @@ function Profile() {
         );
     }
 
+    var EditButtons = '';
+    if (id.id === localStorage.getItem('user_id')) {
+        EditButtons = (
+
+            <Link className='btn btn-info' to={'/profile/update?id=' + id.id} >Edit profile</Link>
+        );
+    }
+
     return (
         <>
             <Breadcrumb>
@@ -68,7 +76,7 @@ function Profile() {
                     </div>
                 </ListGroup>
             </Card>
-            <Link className='btn btn-info' to={'/profile/update?id=' + localStorage.getItem('user_id')} >Edit profile</Link>
+            {EditButtons}
         </>
     );
 

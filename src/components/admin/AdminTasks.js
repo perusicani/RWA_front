@@ -69,12 +69,12 @@ class AdminTasks extends Component {
 
         return (
             <>
+                <ToastContainer />
                 <Breadcrumb>
                     <Breadcrumb.Item href="/admin">Admin</Breadcrumb.Item>
                     <Breadcrumb.Item active>Tasks</Breadcrumb.Item>
                 </Breadcrumb>
                 <div className="container" >
-                    <ToastContainer />
                     <div className="column">
                         {
                             Tasks.length > 0 ?

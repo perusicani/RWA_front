@@ -58,7 +58,6 @@ class Tasks extends Component {
 
     render() {
         const Tasks = this.state.tasks.map(function (task, i) {
-            //va svaki card pass -> title, description, array of checkpoints???, user_claim
             return <Task key={i} task={task} />
         });
 

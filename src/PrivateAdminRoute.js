@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import Loader from 'react-spinners/BeatLoader';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -67,7 +68,13 @@ const PrivateAdminRoute = () => {
     if (loading) {
         return <>
             <ToastContainer />
-            <h1>Loading...</h1>
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }} >
+                <Loader />
+            </div>
         </>
     }
 

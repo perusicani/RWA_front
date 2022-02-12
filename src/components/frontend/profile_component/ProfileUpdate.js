@@ -63,7 +63,7 @@ function ProfileUpdate() {
                         toast.success(response.data.message);
 
                         setTimeout(() => {
-                            navigate(-1);
+                            navigate(-1);   //https://stackoverflow.com/questions/65948671/how-to-go-back-to-previous-route-in-react-router-dom-v6
                         }, 2500);
                     }
                     setName({ name: response.data.user.name });
@@ -82,8 +82,8 @@ function ProfileUpdate() {
     }
 
     return <>
+        <ToastContainer />
         <div>
-            <ToastContainer />
             <h1>{id.id}</h1>
             <div className="form-group">
                 <label htmlFor="name">Name</label>
