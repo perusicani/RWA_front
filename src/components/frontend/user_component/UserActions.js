@@ -18,7 +18,7 @@ function UserActions(props) {
     const handleShowDelete = () => setShowDelete(true);
 
     const deleteUser = () => {
-        axios.delete('/api/users/' + props.userId)
+        axios.delete('/api/users/delete/' + props.userId)
             .then((response) => {
                 console.log(response);
                 toast.success(response.data);

@@ -73,6 +73,7 @@ function CheckpointCard(props) {
                         id={props.checkpoint.id}
                         label={description.description}
                         defaultChecked={initStatus.initStatus}
+                        disabled={initStatus.initStatus}
                         onChange={(checkboxStatus) => {
                             // console.log(checkboxStatus.target.checked);
                             setCheckpointStatus({ checkpointStatus: checkboxStatus.target.checked ? 1 : 0 });

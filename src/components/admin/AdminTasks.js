@@ -1,81 +1,64 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
-import { ToastContainer, toast } from 'react-toastify'; //here, not in updatemodal since we need it shown in parent
+import { ToastContainer } from 'react-toastify'; //here, not in updatemodal since we need it shown in parent
 import 'react-toastify/dist/ReactToastify.css';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactPaginate from 'react-paginate';
 
-import Loader from 'react-spinners/BeatLoader';
+import { Link } from 'react-router-dom';
 
 import Task from '../task_components/Task';
+import Loader from 'react-spinners/BeatLoader';
 
-class AdminTasks extends Component {
-    // Will need:
-    //     table for all AdminTasks
-    //     has -> title, description, action buttons -> update, delete
+//here show update only if task.user_id == our user_id
 
-    //     maybe button -> alert user -> sends them an email that warns about illicit content in their task?
+function AdminTasks() {
 
-    constructor(props) {
-        super(props);
+    const [tasks, setTasks] = useState([]);
+    const [pagination, setPagination] = useState({ total: null, pageCount: 0, currentPage: 0 });
 
-        this.state = {
-            tasks: [],
-            total: null,
-            pageCount: 0,
-            currentPage: 0,
-        }
-    }
+    useEffect(() => {
+        getTasks(1);
+    }, []);
 
-    //call fetch data on mounted component
-    //life cycle method
-    componentDidMount() {
-        this.getTasks(1);
-    }
 
-    //fetching data
-    getTasks = async pageNumber => {
-
-        let self = this;
-
-        axios.get(`/api/tasks?page=${pageNumber}`)
+    const getTasks = async (pageNumber) => {
+        axios.get(`/api/tasks?page=${pageNumber}`,
+            // {
+            //     onDownloadProgress: (progressEvent) => {
+            //         console.log('event: ', progressEvent);
+            //     }
+            // }
+        )
             .then(function (response) {
-                // console.log(response.data);
-                // console.log('response.data.tasks.data ' + response.data.tasks.data);
-                // console.log('response.data.pageCount ' + response.data.pageCount);
-
-                self.setState({
-                    tasks: response.data.tasks.data,
-                    total: response.data.total,
-                    pageCount: response.data.numberOfPages,
-                    currentPage: response.data.page,
-                });
+                setTasks(response.data.tasks.data);
+                setPagination({ total: response.data.total, pageCount: response.data.numberOfPages, currentPage: response.data.page });
             });
 
     }
-    handlePageClick = (event) => {
-        // console.log(event.selected);
-        this.getTasks(event.selected + 1);
+
+    const handlePageClick = (event) => {
+        getTasks(event.selected + 1);
     }
 
-    render() {
-        const Tasks = this.state.tasks.map(function (task, i) {
-            //va svaki card pass -> title, description, array of checkpoints???, user_claim
-            return <Task key={i} task={task} />
-        });
 
-        return (
-            <>
+    const Tasks = tasks.map(function (task, i) {
+        return <Task key={i} task={task} />
+    });
+
+    return (
+        <>
+            <Breadcrumb>
+                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                <Breadcrumb.Item active>Tasks</Breadcrumb.Item>
+            </Breadcrumb>
+            <Link className='btn btn-primary' to='/tasks/create'>Create new</Link>
+            <div className="container" >
                 <ToastContainer />
-                <Breadcrumb>
-                    <Breadcrumb.Item href="/admin">Admin</Breadcrumb.Item>
-                    <Breadcrumb.Item active>Tasks</Breadcrumb.Item>
-                </Breadcrumb>
-                <div className="container" >
-                    <div className="column">
+                <div className="column">
+                    <div>
                         {
                             Tasks.length > 0 ?
                                 <>
@@ -83,9 +66,9 @@ class AdminTasks extends Component {
                                     <ReactPaginate
                                         breakLabel="..."
                                         nextLabel="next >"
-                                        onPageChange={this.handlePageClick}
+                                        onPageChange={handlePageClick}
                                         pageRangeDisplayed={5}
-                                        pageCount={this.state.pageCount}
+                                        pageCount={pagination.pageCount}
                                         previousLabel="< previous"
                                         renderOnZeroPageCount={null}
                                         containerClassName='pagination'
@@ -104,10 +87,13 @@ class AdminTasks extends Component {
                                 <Loader />
                         }
                     </div>
+
                 </div>
-            </>
-        );
-    }
+            </div>
+        </>
+    );
+
+
 }
 
 export default AdminTasks;

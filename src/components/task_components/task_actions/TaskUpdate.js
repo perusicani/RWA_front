@@ -9,23 +9,6 @@ import { useNavigate } from 'react-router-dom';
 
 function TaskUpdate() {
 
-    // constructor(props) {
-    //     super(props);
-
-    //     this.handleInput = this.handleInput.bind(this);
-
-    //     this.updateTask = this.updateTask.bind(this);
-    //     // this.newTutorial = this.newTutorial.bind(this);
-
-    //     this.state = {
-    //         id: null,
-    //         task: null,
-    //         title: '',
-    //         description: '',
-    //         user_id: null,
-    //     };
-
-    // }
     const [id, setId] = useState('');
     const [task, setTask] = useState('');
     const [title, setTitle] = useState('');
@@ -41,7 +24,6 @@ function TaskUpdate() {
         setDescription({ [event.target.name]: event.target.value });
     }
 
-    // componentDidMount = () => {
     useEffect(() => {
         // GET TASK ID
         const queryParams = new URLSearchParams(window.location.search);
@@ -52,12 +34,6 @@ function TaskUpdate() {
         axios.get('/api/tasks/' + id)
             .then((response) => {
                 console.log(response);
-                // this.setState({
-                //     task: response.data.task,
-                //     title: response.data.task.title,
-                //     description: response.data.task.description,
-                //     user_id: response.data.task.user_id
-                // });
                 setTask({ task: response.data.task });
                 setTitle({ title: response.data.task.title });
                 setDescription({ description: response.data.task.description });
@@ -93,10 +69,6 @@ function TaskUpdate() {
                         }, 2500);
                     }
 
-                    // this.setState({
-                    //     title: response.data.task.title,
-                    //     description: response.data.task.description,
-                    // });
                     setTitle({ title: response.data.task.title });
                     setDescription({ description: response.data.task.description });
 
@@ -111,7 +83,6 @@ function TaskUpdate() {
             });
     }
 
-    // render() {
     return <>
         <div>
             <ToastContainer />
@@ -145,7 +116,6 @@ function TaskUpdate() {
             </button>
         </div>
     </>
-    // }
 }
 
 export default TaskUpdate;

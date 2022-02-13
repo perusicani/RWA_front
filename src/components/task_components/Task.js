@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import Card from 'react-bootstrap/Card';
 
@@ -10,13 +10,9 @@ import { Link } from 'react-router-dom';
 
 //props = task
 function Task(props) {
-
-    const [checkpoints, setCheckpoints] = useState([]);
-
     // component did mount, unmount i to explanation 
     // https://dev.to/robmarshall/how-to-use-componentwillunmount-with-functional-components-in-react-2a5g
     // https://stackoverflow.com/questions/53949393/cant-perform-a-react-state-update-on-an-unmounted-component
-
 
     const Checkpoints = props.task.checkpoints.map(function (checkpoint, i) {
         return <CheckpointCard key={i} checkpoint={checkpoint} />

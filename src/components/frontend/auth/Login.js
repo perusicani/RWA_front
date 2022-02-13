@@ -39,6 +39,7 @@ function Login() {
                     localStorage.setItem('auth_token', response.data.token);
                     localStorage.setItem('auth_name', response.data.user.name);
                     localStorage.setItem('user_id', response.data.user.id);
+                    localStorage.setItem('role', response.data.role === 'admin');
 
                     toast.success(response.data.message);
 

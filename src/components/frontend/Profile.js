@@ -46,9 +46,8 @@ function Profile() {
     }
 
     var EditButtons = '';
-    if (id.id === localStorage.getItem('user_id')) {
+    if (id.id === localStorage.getItem('user_id') || localStorage.getItem('role') === 'true') {
         EditButtons = (
-
             <Link className='btn btn-info' to={'/profile/update?id=' + id.id} >Edit profile</Link>
         );
     }

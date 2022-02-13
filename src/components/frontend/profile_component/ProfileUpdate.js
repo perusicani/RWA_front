@@ -5,6 +5,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import Button from 'react-bootstrap/Button';
+
 import { useNavigate } from 'react-router-dom';
 
 function ProfileUpdate() {
@@ -81,6 +83,15 @@ function ProfileUpdate() {
             });
     }
 
+    var SubmitButton = '';
+    if (id.id === localStorage.getItem('user_id') || localStorage.getItem('role') === 'true') {
+        SubmitButton = (
+            <Button onClick={updateUser} className="btn btn-success">
+                Submit
+            </Button>
+        );
+    }
+
     return <>
         <ToastContainer />
         <div>
@@ -121,9 +132,7 @@ function ProfileUpdate() {
                     name="description"
                 />
             </div>
-            <button onClick={updateUser} className="btn btn-success">
-                Submit
-            </button>
+            {SubmitButton}
         </div>
     </>
     // }
