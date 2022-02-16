@@ -23,6 +23,7 @@ function NavBar() {
                 localStorage.removeItem('auth_token');
                 localStorage.removeItem('auth_name');
                 localStorage.removeItem('user_id');
+                localStorage.removeItem('role');
 
                 toast.success(response.data.message);
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Card from 'react-bootstrap/Card';
 
@@ -8,7 +8,7 @@ import Loader from 'react-spinners/BeatLoader';
 
 import { Link } from 'react-router-dom';
 
-//props = task
+//props = task, settasks
 function Task(props) {
     // component did mount, unmount i to explanation 
     // https://dev.to/robmarshall/how-to-use-componentwillunmount-with-functional-components-in-react-2a5g
@@ -18,8 +18,10 @@ function Task(props) {
         return <CheckpointCard key={i} checkpoint={checkpoint} />
     });
 
+
+
     return (
-        <Card style={{ margin: 15 }}>
+        < Card style={{ margin: 15 }}>
             <Card.Body>
                 <Card.Title>{props.task.title}</Card.Title>
                 <Card.Text>{props.task.description}</Card.Text>
@@ -37,11 +39,11 @@ function Task(props) {
                 {/* <CheckpointCard /> */}
                 <Card.Text>
                     <Link className='btn btn-primary' to={'/profile?id=' + props.task.user_id}>
-                        Creators profile
+                        Creators id: {props.task.user_id}
                     </Link>
                 </Card.Text>
 
-                <TaskActions task={props.task} />
+                <TaskActions task={props.task} tasks={props.tasks} setTasks={props.setTasks} />
             </Card.Body>
         </Card >
 

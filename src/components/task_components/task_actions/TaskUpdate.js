@@ -6,11 +6,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { useNavigate } from 'react-router-dom';
+import CheckpointUpdate from './CheckpointsUpdate';
+import Loader from 'react-spinners/BeatLoader';
 
 function TaskUpdate() {
 
     const [id, setId] = useState('');
-    const [task, setTask] = useState('');
+    const [task, setTask] = useState(null);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [userId, setUserId] = useState('');
@@ -68,7 +70,7 @@ function TaskUpdate() {
                             navigate('/tasks');
                         }, 2500);
                     }
-
+                    setTask({ task: response.data.task });
                     setTitle({ title: response.data.task.title });
                     setDescription({ description: response.data.task.description });
 
@@ -81,6 +83,23 @@ function TaskUpdate() {
                 console.log(error);
                 toast.error(error);
             });
+    }
+
+    var CheckpointsUpdates = [];
+
+    // if (task != null) {
+    //     CheckpointsUpdates = task.task.checkpoints.map(function (checkpoint, i) {
+    //         return <CheckpointUpdate checkpoint={checkpoint} />;
+    //     });
+    // }
+
+    var SubmitButton = '';
+    if (task != null && (task.task.user_id.toString() === localStorage.getItem('user_id') || localStorage.getItem('role') === 'true')) {
+        SubmitButton = (
+            <button onClick={updateTask} className="btn btn-success">
+                Submit
+            </button>
+        );
     }
 
     return <>
@@ -111,9 +130,8 @@ function TaskUpdate() {
                     name="description"
                 />
             </div>
-            <button onClick={updateTask} className="btn btn-success">
-                Submit
-            </button>
+            {CheckpointsUpdates}
+            {SubmitButton}
         </div>
     </>
 }

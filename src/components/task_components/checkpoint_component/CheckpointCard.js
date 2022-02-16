@@ -8,37 +8,35 @@ import 'react-toastify/dist/ReactToastify.css';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 //props == checkpoint object
 function CheckpointCard(props) {
 
-    const [initStatus, setInitStatus] = useState(0);
-    const [checkpointStatus, setCheckpointStatus] = useState(0);
+    const [initStatus, setInitStatus] = useState(props.checkpoint.status);
+    const [checkpointStatus, setCheckpointStatus] = useState(props.checkpoint.status);
     const [statusChange, setStatusChange] = useState(0);
-    const [description, setDescription] = useState('');
+    const [description, setDescription] = useState({ description: props.checkpoint.description });
+    const [claimed, setClaimed] = useState(props.checkpoint.claimed_by); //user_id of claimer
 
     // https://stackoverflow.com/questions/53255951/equivalent-to-componentdidupdate-using-react-hooks
     // const mounted = useRef();
 
-    // on init
-    useEffect(() => {
-        setInitStatus({ initStatus: props.checkpoint.status });
-        setCheckpointStatus({ checkpointStatus: props.checkpoint.status });
-        setDescription({ description: props.checkpoint.description });
-    }, []);
-
     //on each status change
     useEffect(() => {
-        setStatusChange({ statusChange: initStatus.initStatus !== checkpointStatus.checkpointStatus });
-    }, [checkpointStatus]);
+        setStatusChange(initStatus !== checkpointStatus);
+    }, [checkpointStatus, initStatus]);
 
-    const updateCheckpoint = () => {
+    const updateCheckpoint = (claim) => {
 
         var checkpoint = {
             id: props.checkpoint.id,
             description: props.checkpoint.description,
-            status: checkpointStatus.checkpointStatus,
+            status: checkpointStatus,
             task_id: props.checkpoint.task_id,
+            claimed_by: claim,
         }
 
         axios.post('/api/checkpoints', { checkpoint: checkpoint })
@@ -50,8 +48,10 @@ function CheckpointCard(props) {
                         setInitStatus({ initStatus: response.data.checkpoint.status });
                     }
 
-                    setCheckpointStatus({ checkpointStatus: response.data.checkpoint.status });
+                    setInitStatus(response.data.checkpoint.status);
+                    setCheckpointStatus(response.data.checkpoint.status);
                     setDescription({ description: response.data.checkpoint.description });
+                    setClaimed(response.data.checkpoint.claimed_by);
 
                     if (response.status === 422) {
                         console.log(response);
@@ -64,28 +64,67 @@ function CheckpointCard(props) {
             });
     }
 
+    const onClickClaim = () => {
+        setClaimed(localStorage.getItem('user_id'));
+        updateCheckpoint(localStorage.getItem('user_id'));
+    }
+
+    const onClickUnClaim = () => {
+        setClaimed(null);
+        updateCheckpoint(null);
+    }
+
+    const renderClaimbutton = () => {
+        if (checkpointStatus === 0) {
+            if (claimed === null) {
+                //claim update with own user_id
+                return <Button onClick={onClickClaim}>Claim Task?</Button>;
+            } else if (claimed !== null && claimed.toString() === localStorage.getItem('user_id')) {
+                //claim update with null
+                return <Button onClick={onClickUnClaim}>Unclaim Task?</Button>;
+            } else if (claimed !== null) {
+                //show whose claim it is
+                return <div>{claimed.toString()}</div>;
+            }
+        }
+    }
+
     return (
         <Card className='m-2'>
             <Card.Header>
-                <div key={`default-checkbox`} >
-                    <Form.Check
-                        type='checkbox'
-                        id={props.checkpoint.id}
-                        label={description.description}
-                        defaultChecked={initStatus.initStatus}
-                        disabled={initStatus.initStatus}
-                        onChange={(checkboxStatus) => {
-                            // console.log(checkboxStatus.target.checked);
-                            setCheckpointStatus({ checkpointStatus: checkboxStatus.target.checked ? 1 : 0 });
-                        }}
-                    />
-                </div>
-                <div>
-                    {statusChange.statusChange ? <Button onClick={updateCheckpoint}>Save changes?</Button> : null}
-                </div>
+                <Container>
+                    <Row>
+                        <Col>
+                            <div key={`default-checkbox`} >
+                                <Form.Check
+                                    type='checkbox'
+                                    id={props.checkpoint.id}
+                                    label={description.description}
+                                    defaultChecked={initStatus}
+                                    disabled={initStatus || (claimed !== null && claimed.toString() !== localStorage.getItem('user_id'))}
+                                    onChange={(checkboxStatus) => {
+                                        // console.log(checkboxStatus.target.checked);
+                                        setCheckpointStatus(checkboxStatus.target.checked ? 1 : 0);
+                                    }}
+                                />
+                            </div>
+                        </Col>
+                        <Col>
+                            <div>
+                                {statusChange ? <Button onClick={() => {
+                                    updateCheckpoint(claimed);
+                                }}>Save changes?</Button> : null}
+                            </div>
+                        </Col>
+                        <Col>
+                            {renderClaimbutton()}
+                        </Col>
+                    </Row>
+                </Container>
             </Card.Header>
         </Card>
     );
 }
 
 export default CheckpointCard;
+

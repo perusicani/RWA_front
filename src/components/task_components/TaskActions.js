@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
@@ -17,10 +17,11 @@ function TaskActions(props) {
     const handleShowDelete = () => setShowDelete(true);
 
     const deleteTask = () => {
-        axios.delete('/api/tasks/' + props.task.id)
+        axios.delete('/api/tasks/delete/' + props.task.id)
             .then((response) => {
                 console.log(response);
                 toast.success(response.data);
+                removeTaskFromUI();
             })
             .catch((error) => {
                 console.log(error);
@@ -29,13 +30,30 @@ function TaskActions(props) {
         setShowDelete(false);
     }
 
+    const removeTaskFromUI = () => {
+        props.setTasks(props.tasks.filter(task => {
+            if (task.id !== props.task.id) {
+                return task;
+            }
+        }));
+    }
+
+    var TaskButtons = '';
+    if (props.task.user_id.toString() === localStorage.getItem('user_id') || localStorage.getItem('role') === 'true') {
+        TaskButtons = (
+            <>
+                <Link to={'/tasks/update?id=' + props.task.id} className="btn btn-info" >Update</Link>
+
+                <Button type="button" className="btn btn-danger" onClick={handleShowDelete} >Delete</Button>
+            </>
+        );
+    }
+
     return (
         <div className="btn-group" role="group">
             <ToastContainer />
 
-            <Link to={'/tasks/update?id=' + props.task.id} className="btn btn-info" >Update</Link>
-
-            <Button type="button" className="btn btn-danger" onClick={handleShowDelete} >Delete</Button>
+            {TaskButtons}
 
             <Modal show={showDelete} onHide={handleCloseDelete}>
                 <Modal.Header closeButton>
