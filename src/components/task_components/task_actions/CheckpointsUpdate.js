@@ -1,28 +1,43 @@
 import React, { useState } from 'react';
 
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+
 //props == checkpoint
 function CheckpointUpdate(props) {
 
-  const [description, setDescription] = useState(props.checkpoint.description);
+  const [checkpointData, setCheckpointData] = useState({ description: props.checkpoint.description });
 
   const handleInputDescription = (event) => {
-    setDescription({ [event.target.name]: event.target.value });
+    setCheckpointData({ description: event.target.value });
+    props.checkpoint.description = event.target.value;
   }
 
   return (
-    <div className="form-group">
-      <label htmlFor="title">Title</label>
-      <input
-        type="text"
-        className="form-control"
-        id="description"
-        required
-        value={description.description ?? ''}   // https://stackoverflow.com/questions/47012169/a-component-is-changing-an-uncontrolled-input-of-type-text-to-be-controlled-erro
-        onChange={handleInputDescription}
-        name="description"
-      />
-    </div>
-    // <div>{props.checkpoint.title}</div>
+    <>
+      <Container>
+        <Row>
+          <Col>
+            <label htmlFor="description">{props.checkpoint.id}</label>
+          </Col>
+          <Col>
+            <input
+              type="text"
+              className="form-control"
+              id="descritpion"
+              required
+              value={checkpointData.description}
+              onChange={handleInputDescription}
+              name="title"
+            />
+          </Col>
+          {/* <Col>
+            <Button onClick={() => props.removeCheckpoint(props.checkpoint.id)} >-</Button>
+          </Col> */}
+        </Row>
+      </Container>
+    </>
   );
 }
 

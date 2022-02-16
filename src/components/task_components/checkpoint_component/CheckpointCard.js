@@ -39,7 +39,7 @@ function CheckpointCard(props) {
             claimed_by: claim,
         }
 
-        axios.post('/api/checkpoints', { checkpoint: checkpoint })
+        axios.post('/api/checkpoint', { checkpoint: checkpoint })
             .then(
                 response => {
                     if (response.status === 200) {
