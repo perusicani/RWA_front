@@ -14,7 +14,7 @@ function TaskUpdate() {
     const [loading, setLoading] = useState(false);
 
     const [id, setId] = useState('');
-    const [task, setTask] = useState(null);
+    const [stateTask, setStateTask] = useState(null);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [userId, setUserId] = useState('');
@@ -29,7 +29,6 @@ function TaskUpdate() {
     }
 
     useEffect(() => {
-        console.log('setting loading to true');
         setLoading(true);
         // GET TASK ID
         const queryParams = new URLSearchParams(window.location.search);
@@ -40,7 +39,7 @@ function TaskUpdate() {
         axios.get('/api/tasks/' + id)
             .then((response) => {
                 console.log(response);
-                setTask({ task: response.data.task });
+                setStateTask({ task: response.data.task });
                 setTitle({ title: response.data.task.title });
                 setDescription({ description: response.data.task.description });
                 setUserId({ userId: response.data.task.user_id });
@@ -55,7 +54,6 @@ function TaskUpdate() {
     // https://stackoverflow.com/questions/53120972/how-to-call-loading-function-with-react-useeffect-only-once
 
     const updateTask = (event) => {
-        console.log('setting loading to true');
         setLoading(true);
         event.preventDefault();
 
@@ -63,7 +61,7 @@ function TaskUpdate() {
             id: id.id,
             title: title.title,
             description: description.description,
-            status: 0,
+            status: stateTask.task.status,
         };
 
         var user_id = userId.userId;
@@ -75,18 +73,20 @@ function TaskUpdate() {
                     toast.success(response.data.message);
 
                 }
-                setTask({ task: response.data.task });
+                setStateTask({ task: response.data.task });
                 setTitle({ title: response.data.task.title });
                 setDescription({ description: response.data.task.description });
 
                 if (response.status === 422) {
                     console.log(response);
                     toast.error(response);
+                    setLoading(false);
                 }
             })
             .catch(error => {
                 console.log(error);
                 toast.error(error);
+                setLoading(false);
             });
 
         axios.post('/api/checkpoints', { checkpoints: checkpoints })
@@ -94,31 +94,29 @@ function TaskUpdate() {
                 console.log(response);
                 toast.error(response);
 
-                setTimeout(() => {
-                    navigate('/tasks');
-                }, 2500);
-
                 setLoading(false);
+
+                navigate('/tasks');
+
             }).catch((error) => {
                 console.log(error);
                 toast.error(error);
                 setLoading(false);
-            })
-
+            });
     }
 
     const [checkpoints, setCheckpoints] = useState([]);
 
     var CheckpointsUpdates = [];
 
-    if (task != null) {
+    if (stateTask != null) {
         CheckpointsUpdates = checkpoints.map(function (checkpoint, i) {
             return <CheckpointUpdate key={i} checkpoint={checkpoint} />;
         });
     }
 
     var SubmitButton = '';
-    if (task != null && (task.task.user_id.toString() === localStorage.getItem('user_id') || localStorage.getItem('role') === 'true')) {
+    if (stateTask != null && (stateTask.task.user_id.toString() === localStorage.getItem('user_id') || localStorage.getItem('role') === 'true')) {
         SubmitButton = (
             <button onClick={updateTask} className="btn btn-success">
                 Submit

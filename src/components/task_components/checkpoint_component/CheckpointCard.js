@@ -46,6 +46,7 @@ function CheckpointCard(props) {
                         console.log('Checkpoint update success: ' + JSON.stringify(response.data));
                         toast.success(response.data.message);
                         setInitStatus({ initStatus: response.data.checkpoint.status });
+                        props.callBack(response.data.checkpoint);
                     }
 
                     setInitStatus(response.data.checkpoint.status);

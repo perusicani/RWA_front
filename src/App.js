@@ -9,6 +9,8 @@ import AdminDashboard from './components/admin/AdminDashboard';
 import AdminProfile from './components/admin/AdminProfile';
 import AdminUsers from './components/admin/AdminUsers';
 import AdminTasks from './components/admin/AdminTasks';
+import AdminSkills from './components/admin/AdminSkills';
+import AdminSkillsCreate from './components/admin/AdminSkillsCreate';
 
 import FrontendLayout from './layouts/frontend/FrontendLayout';
 import Home from './components/frontend/Home';
@@ -79,6 +81,8 @@ function App() {
               <Route path="/admin/profile" element={<AdminProfile />} />
               <Route path="/admin/users" element={<AdminUsers />} />
               <Route path="/admin/tasks" element={<AdminTasks />} />
+              <Route path='/admin/skills' element={<AdminSkills />} ></Route>
+              <Route path='/admin/skills/create' element={<AdminSkillsCreate />} ></Route>
 
             </Route>
             <Route path="/admin/*" element={<Page404 />} />
