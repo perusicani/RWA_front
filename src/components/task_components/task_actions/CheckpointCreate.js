@@ -20,9 +20,6 @@ function CheckpointCreate(props) {
             <Container>
                 <Row>
                     <Col>
-                        <label htmlFor="description">{props.checkpoint.id}</label>
-                    </Col>
-                    <Col>
                         <input
                             type="text"
                             className="form-control"

@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
 
 //props == checkpoint
 function CheckpointUpdate(props) {
 
-  const [checkpointData, setCheckpointData] = useState({ description: props.checkpoint.description });
+  const [checkpointData, setCheckpointData] = useState({ status: props.checkpoint.status, description: props.checkpoint.description });
 
   const handleInputDescription = (event) => {
     setCheckpointData({ description: event.target.value });
@@ -22,6 +23,19 @@ function CheckpointUpdate(props) {
             <label htmlFor="description">{props.checkpoint.id}</label>
           </Col>
           <Col>
+            <div key={`default-checkbox`} >
+              <Form.Check
+                type='checkbox'
+                id={props.checkpoint.id}
+                defaultChecked={checkpointData.status}
+                onChange={(checkboxStatus) => {
+                  setCheckpointData({ status: checkboxStatus.target.checked ? 1 : 0 });
+                  props.checkpoint.status = checkboxStatus.target.checked ? 1 : 0;
+                }}
+              />
+            </div>
+          </Col>
+          <Col>
             <input
               type="text"
               className="form-control"
@@ -32,9 +46,6 @@ function CheckpointUpdate(props) {
               name="title"
             />
           </Col>
-          {/* <Col>
-            <Button onClick={() => props.removeCheckpoint(props.checkpoint.id)} >-</Button>
-          </Col> */}
         </Row>
       </Container>
     </>

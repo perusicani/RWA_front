@@ -23,7 +23,6 @@ import Profile from './components/frontend/Profile';
 import ProfileUpdate from './components/frontend/profile_component/ProfileUpdate';
 import CreateForm from './components/task_components/task_actions/CreateForm';
 
-
 axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Accept'] = 'application/json';

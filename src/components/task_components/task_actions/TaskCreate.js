@@ -1,4 +1,5 @@
 import React from 'react';
+import SkillsChipSelection from '../chips/SkillsChipSelection';
 
 function TaskCreate(props) {
 
@@ -9,7 +10,6 @@ function TaskCreate(props) {
         props.setDescription({ [event.target.name]: event.target.value });
     }
 
-    // render() {
     return <>
         <div>
             <div className="form-group">
@@ -36,13 +36,60 @@ function TaskCreate(props) {
                     name="description"
                 />
             </div>
-            {/* <button onClick={createTask} className="btn btn-success">
-                Submit
-            </button> */}
+            <div>
+                <SkillsChipSelection />
+            </div>
         </div>
     </>
-    // }
 }
+
+export default TaskCreate;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // function TaskCreate(props) {
 
 //     const [title, setTitle] = useState('');
@@ -131,5 +178,3 @@ function TaskCreate(props) {
 //     </>
 //     // }
 // }
-
-export default TaskCreate;

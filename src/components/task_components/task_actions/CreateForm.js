@@ -14,6 +14,8 @@ import Loader from 'react-spinners/BeatLoader';
 
 import { useNavigate } from 'react-router-dom';
 
+toast.configure();
+
 function CreateForm() {
 
     const navigate = useNavigate();

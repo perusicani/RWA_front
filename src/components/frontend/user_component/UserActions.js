@@ -45,7 +45,8 @@ function UserActions(props) {
                     <Modal.Title>Delete User?</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Are you sure you wish to delete this User?</Modal.Body>
-                <Modal.Body>This action is irreversable, so think this through!</Modal.Body>
+                <Modal.Body>This action is irreversable, so think this through or send the user a warning by their email!</Modal.Body>
+                <Modal.Body>(Their email can be found on their profile)</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseDelete}>
                         No

@@ -5,6 +5,9 @@ import axios from 'axios';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 import Loader from 'react-spinners/BeatLoader';
 
 import { Link } from 'react-router-dom';
@@ -52,6 +55,10 @@ function Profile() {
         );
     }
 
+    const sendEmail = () => {
+        window.location = "mailto:" + user.user.email ?? '';
+    }
+
     return (
         <>
             <Breadcrumb>
@@ -67,7 +74,18 @@ function Profile() {
                                 <>
                                     <ListGroup.Item>id: {user.user.id ?? ''}</ListGroup.Item>
                                     <ListGroup.Item>name: {user.user.name ?? ''}</ListGroup.Item>
-                                    <ListGroup.Item>email: {user.user.email ?? ''}</ListGroup.Item>
+                                    <ListGroup.Item>
+                                        <Row>
+                                            <Col>
+                                                email: {user.user.email ?? ''}
+                                            </Col>
+                                            <Col>
+                                                <Button onClick={sendEmail}>
+                                                    Contact user?
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    </ListGroup.Item>
                                     <ListGroup.Item>description: {user.user.description ?? ''}</ListGroup.Item>
                                 </>
                                 : <Loader />

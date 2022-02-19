@@ -18,10 +18,22 @@ function Task(props) {
         return <CheckpointCard key={i} checkpoint={checkpoint} />
     });
 
+    var CompleteButtons = '';
 
+    if (!props.task.status) {
+        CompleteButtons = <>
+            <Card.Text>
+                <Link className='btn btn-primary' to={'/profile?id=' + props.task.user_id}>
+                    Creators id: {props.task.user_id}
+                </Link>
+            </Card.Text>
+
+            <TaskActions task={props.task} tasks={props.tasks} setTasks={props.setTasks} />
+        </>;
+    }
 
     return (
-        < Card style={{ margin: 15 }}>
+        < Card style={{ margin: 15, background: props.task.status ? '#dddddd' : 'white' }} >
             <Card.Body>
                 <Card.Title>{props.task.title}</Card.Title>
                 <Card.Text>{props.task.description}</Card.Text>
@@ -36,18 +48,9 @@ function Task(props) {
                             <Loader />
                     }
                 </div>
-                {/* <CheckpointCard /> */}
-                <Card.Text>
-                    <Link className='btn btn-primary' to={'/profile?id=' + props.task.user_id}>
-                        Creators id: {props.task.user_id}
-                    </Link>
-                </Card.Text>
-
-                <TaskActions task={props.task} tasks={props.tasks} setTasks={props.setTasks} />
+                {CompleteButtons}
             </Card.Body>
         </Card >
-
-
     );
 
 }
