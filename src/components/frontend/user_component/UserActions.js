@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import axios from 'axios';
 
@@ -22,6 +22,7 @@ function UserActions(props) {
             .then((response) => {
                 console.log(response);
                 toast.success(response.data);
+                removeUserFromUI();
             })
             .catch((error) => {
                 console.log(error);
@@ -29,6 +30,15 @@ function UserActions(props) {
             });
         setShowDelete(false);
     }
+
+    const removeUserFromUI = () => {
+        props.setUsers(props.users.filter(user => {
+            if (user.id !== props.user.id) {
+                return user;
+            }
+        }));
+    }
+
 
     return (
         <div className="btn-group" role="group">
@@ -57,18 +67,6 @@ function UserActions(props) {
                 </Modal.Footer>
             </Modal>
         </div>
-        // <div className="btn-group" role="group">
-        //     <Button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={"#viewModal" + props.userId}>View</Button>
-        //     {/* the modal is hidden until called */}
-        //     {/* pass through the note id and data */}
-        //     {/* <ViewModal modalId={props.userId} noteDetails={state} /> */}
-
-        //     <Button type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target={"#updateModal" + props.userId}>Update</Button>
-        //     {/* <UpdateModal modalId={props.userId} noteDetails={state} /> */}
-
-        //     <Button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target={"#deleteModal" + props.userId}>Delete</Button>
-        //     {/* <DeleteModal modalId={props.userId} /> */}
-        // </div>
     );
 
 }

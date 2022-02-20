@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import axios from 'axios';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Card from 'react-bootstrap/Card';
@@ -10,9 +10,10 @@ import Card from 'react-bootstrap/Card';
 import TaskActions from './TaskActions';
 import CheckpointCard from './checkpoint_component/CheckpointCard';
 import Loader from 'react-spinners/BeatLoader';
+import Chip from '@mui/material/Chip';
+import Tooltip from '@mui/material/Tooltip';
 
 import { Link } from 'react-router-dom';
-import { responsivePropType } from 'react-bootstrap/esm/createUtilityClasses';
 
 //props = task, settasks
 function Task(props) {
@@ -77,17 +78,30 @@ function Task(props) {
 
     var CompleteButtons = '';
 
-    if (!props.task.status) {
+    //ako je status done && nisi kreator ili nisi admin -> don't show
+    if (!props.task.status || props.task.user_id === localStorage.getItem('user_id') || localStorage.getItem('role') === 'true') {
         CompleteButtons = <>
-            <Card.Text>
+            {/* <Card.Text>
                 <Link className='btn btn-primary' to={'/profile?id=' + props.task.user_id}>
                     Creators id: {props.task.user_id}
                 </Link>
-            </Card.Text>
+            </Card.Text> */}
 
             <TaskActions task={props.task} tasks={props.tasks} setTasks={props.setTasks} />
         </>;
     }
+
+    const Skills = props.task.skills.map(function (skill, i) {
+        return <Tooltip
+            key={i}
+            title={skill.description}
+        >
+            <Chip
+                style={{ margin: 5 }}
+                label={skill.name}
+            />
+        </Tooltip>;
+    });
 
     return (
         < Card style={{ margin: 15, background: props.task.status ? '#dddddd' : 'white' }} >
@@ -105,6 +119,18 @@ function Task(props) {
                             <Loader />
                     }
                 </div>
+                <footer style={{ margin: 3 }} className="blockquote-footer">
+                    {Skills ?
+                        <>
+                            {Skills.length > 0 ? Skills : <div>no skills required</div>}
+                        </> : <Loader />}
+                </footer>
+                <Card.Text>
+                    <Link className='btn btn-primary' to={'/profile?id=' + props.task.user_id}>
+                        Creators id: {props.task.user_id}
+                    </Link>
+                </Card.Text>
+
                 {CompleteButtons}
             </Card.Body>
         </Card >

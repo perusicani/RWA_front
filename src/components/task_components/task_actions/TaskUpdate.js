@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { useNavigate } from 'react-router-dom';
 import CheckpointUpdate from './CheckpointsUpdate';
+import SkillsChipSelection from '../chips/SkillsChipSelection';
 import Loader from 'react-spinners/BeatLoader';
 
 function TaskUpdate() {
@@ -44,6 +45,7 @@ function TaskUpdate() {
                 setDescription({ description: response.data.task.description });
                 setUserId({ userId: response.data.task.user_id });
                 setCheckpoints(response.data.task.checkpoints);
+                setSkills(response.data.task.skills);
                 setLoading(false);
             })
             .catch((error) => {
@@ -57,11 +59,21 @@ function TaskUpdate() {
         setLoading(true);
         event.preventDefault();
 
+        //check if checkpoints complete or not
+        // var status = stateTask.task.status;
+        var checkpointsDone = 1;
+        checkpoints.forEach((checkpoint) => {
+            //ako bilo koji nije done -> 0
+            if (!checkpoint.status) {
+                checkpointsDone = 0;
+            }
+        });
+
         var task = {
             id: id.id,
             title: title.title,
             description: description.description,
-            status: stateTask.task.status,
+            status: checkpointsDone,
         };
 
         var user_id = userId.userId;
@@ -76,6 +88,17 @@ function TaskUpdate() {
                 setStateTask({ task: response.data.task });
                 setTitle({ title: response.data.task.title });
                 setDescription({ description: response.data.task.description });
+
+                var skillIds = [];
+
+                skills.forEach((skill) => {
+                    // /if skillIds or current skills contains that one, don't add
+                    if (!skillIds.some(idSkill => (skill.id === idSkill.id))) {
+                        skillIds.push(skill.id)
+                    }
+                });
+
+                addSkills(response.data.task.id, skillIds);
 
                 if (response.status === 422) {
                     console.log(response);
@@ -112,6 +135,21 @@ function TaskUpdate() {
     if (stateTask != null) {
         CheckpointsUpdates = checkpoints.map(function (checkpoint, i) {
             return <CheckpointUpdate key={i} checkpoint={checkpoint} />;
+        });
+    }
+
+    // skills states
+    const [skills, setSkills] = useState([]);
+
+    const addSkills = (taskId, skillIds) => {
+
+        axios.post('/api/tasks/add-skills', { taskId: taskId, skillIds: skillIds }
+        ).then((skillResponse) => {
+            if (skillResponse.status === 200) {
+                console.log(skillResponse.data);
+            }
+        }).catch((error) => {
+            console.log(error);
         });
     }
 
@@ -158,6 +196,9 @@ function TaskUpdate() {
                     />
                 </div>
                 {CheckpointsUpdates}
+                <div>
+                    <SkillsChipSelection skills={skills} setSkills={setSkills} />
+                </div>
                 {SubmitButton}
             </div>);
         }

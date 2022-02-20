@@ -39,7 +39,7 @@ function NavBar() {
 
     var AuthButtons = '';
     if (!localStorage.getItem('auth_token')) {
-        {/* login and register */ }
+        /* login and register */
         AuthButtons = (
             <>
                 <Nav.Item >
@@ -51,7 +51,7 @@ function NavBar() {
             </>
         )
     } else {
-        {/* logout */ }
+        /* logout */
         AuthButtons = (
             <>
                 <Nav.Item> <Nav.Link href="/tasks">Tasks</Nav.Link> </Nav.Item>

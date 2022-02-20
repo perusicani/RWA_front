@@ -1,8 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 
-import NavBar from '../../../layouts/frontend/NavBar';
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Button from 'react-bootstrap/Button';
 
+import SkillsChipSelection from '../../task_components/chips/SkillsChipSelection';
+
 import { useNavigate } from 'react-router-dom';
 
 function ProfileUpdate() {
@@ -16,6 +18,8 @@ function ProfileUpdate() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [description, setDescription] = useState('');
+
+    const [skills, setSkills] = useState([]);
 
     const navigate = useNavigate();
 
@@ -41,6 +45,7 @@ function ProfileUpdate() {
                 setName({ name: response.data.user.name });
                 setEmail({ email: response.data.user.email });
                 setDescription({ description: response.data.user.description });
+                setSkills(response.data.user.skills);
             })
             .catch((error) => {
                 console.log(error);
@@ -64,13 +69,22 @@ function ProfileUpdate() {
                         console.log('User update success: ' + JSON.stringify(response.data));
                         toast.success(response.data.message);
 
-                        setTimeout(() => {
-                            navigate(-1);   //https://stackoverflow.com/questions/65948671/how-to-go-back-to-previous-route-in-react-router-dom-v6
-                        }, 2500);
+                        setName({ name: response.data.user.name });
+                        setEmail({ email: response.data.user.email });
+                        setDescription({ description: response.data.user.description });
+
+                        var skillIds = [];
+
+                        skills.forEach((skill) => {
+                            // /if skillIds or current skills contains that one, don't add
+                            if (!skillIds.some(idSkill => (skill.id === idSkill.id))) {
+                                skillIds.push(skill.id)
+                            }
+                        });
+
+                        addSkills(response.data.user.id, skillIds);
+
                     }
-                    setName({ name: response.data.user.name });
-                    setEmail({ email: response.data.user.email });
-                    setDescription({ description: response.data.user.description });
 
                     if (response.status === 422) {
                         console.log(response);
@@ -81,6 +95,23 @@ function ProfileUpdate() {
                 console.log(error);
                 toast.error(error);
             });
+
+
+    }
+
+    const addSkills = (userId, skillIds) => {
+
+        axios.post('/api/users/add-skills', { userId: userId, skillIds: skillIds }
+        ).then((skillResponse) => {
+            if (skillResponse.status === 200) {
+                console.log(skillResponse.data);
+
+                navigate(-1);   //https://stackoverflow.com/questions/65948671/how-to-go-back-to-previous-route-in-react-router-dom-v6
+
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     var SubmitButton = '';
@@ -131,6 +162,9 @@ function ProfileUpdate() {
                     onChange={handleInputDescription}
                     name="description"
                 />
+            </div>
+            <div>
+                <SkillsChipSelection skills={skills} setSkills={setSkills} />
             </div>
             {SubmitButton}
         </div>

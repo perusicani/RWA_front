@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ProgressBar } from 'react-bootstrap';
 
 import axios from 'axios';
@@ -48,7 +48,21 @@ function CreateForm() {
                         console.log('Task created successfully!');
                         toast.success(response.data.message);
 
+
                         setStateTask({ task: response.data.task });
+
+                        var skillIds = [];
+
+                        skills.forEach((skill) => {
+                            // /if skillIds or current skills contains that one, don't add
+                            if (!skillIds.some(idSkill => (skill.id === idSkill.id))) {
+                                skillIds.push(skill.id)
+                            }
+                        });
+
+                        //add skills to newly created task
+                        addSkills(response.data.task.id, skillIds);
+
                         //jedino ako je success go to next step
                         setStep((currentStep) => currentStep + 1);
                     }
@@ -95,6 +109,14 @@ function CreateForm() {
                         console.log('Task updated successfully!');
                         toast.success(response.data.message);
 
+                        // //if task skills ids is different from skills
+                        var skillIds = [];
+                        skills.forEach((skill) => {
+                            skillIds.push(skill.id)
+                        });
+
+                        addSkills(response.data.task.id, skillIds);
+
                         setStep((currentStep) => currentStep + 1);
                     }
 
@@ -120,7 +142,7 @@ function CreateForm() {
 
         setLoading(true);
 
-        axios.delete('/api/tasks/' + stateTask.task.id)
+        axios.delete('/api/tasks/delete/' + stateTask.task.id)
             .then((response) => {
                 setLoading(false);
                 console.log(response);
@@ -135,6 +157,34 @@ function CreateForm() {
                 toast.error(error);
             });
     }
+
+    // skills states
+    const [skills, setSkills] = useState([]);
+
+    const addSkills = (taskId, skillIds) => {
+        // {
+        //     "taskId":31,
+        //     "skillIds": [1]
+        // }
+        // var skillIds = [];
+
+        // skills.forEach((skill) => {
+        //     // /if skillIds or current skills contains that one, don't add
+        //     if (!skillIds.some(idSkill => (skill.id === idSkill.id))) {
+        //         skillIds.push(skill.id)
+        //     }
+        // });
+
+        axios.post('/api/tasks/add-skills', { taskId: taskId, skillIds: skillIds }
+        ).then((skillResponse) => {
+            if (skillResponse.status === 200) {
+                console.log(skillResponse.data);
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
 
     // Checkpoints
     //list of checkpoints -> initially empty
@@ -180,7 +230,7 @@ function CreateForm() {
             );
         }
         if (step === 0) {
-            return <TaskCreate title={title.title} description={description.description} setTitle={setTitle} setDescription={setDescription} />;
+            return <TaskCreate title={title.title} description={description.description} setTitle={setTitle} setDescription={setDescription} skills={skills} setSkills={setSkills} />;
         }
         if (step === 1) {
             return <CheckpointsCreate task={stateTask.task} checkpoints={checkpoints} setCheckpoints={setCheckpoints} />;
@@ -208,17 +258,17 @@ function CreateForm() {
                         // if task == null && step == 0 -> navigate(-1);
                         if (step === 0 && stateTask === null) {
                             //navigate away from page (nothing has been submitted)
-                            console.log('first step + task === null -> navigate(-1)');
+                            // console.log('first step + task === null -> navigate(-1)');
                             navigate(-1);
                         }
                         // if task !=== null && step === 0 -> delete task by id and navigate to /tasks
                         if (step === 0 && stateTask != null) {
-                            console.log('step === 0 + task != null -> delete task new task');
+                            // console.log('step === 0 + task != null -> delete task new task');
                             deleteTask();
                         }
                         //if step === 1 -> jus go back to prev component
                         if (step === 1) {
-                            console.log('step === 1 -> going to previous step');
+                            // console.log('step === 1 -> going to previous step');
                             setStep((currentStep) => currentStep - 1);
                         }
                     }}>
@@ -228,17 +278,17 @@ function CreateForm() {
                     onClick={() => {
                         // if first step && task not created yet -> create task and wait for response
                         if (step === 0 && stateTask === null) {
-                            console.log('step === 0 + task === null -> creating task');
+                            // console.log('step === 0 + task === null -> creating task');
                             createTask();
                         }
                         if (step === 0 && stateTask !== null) {
-                            console.log('step === 0 + task !== null -> updating task');
+                            // console.log('step === 0 + task !== null -> updating task');
                             updateTask();
                         }
                         //if second step and task was created -> submit all checkpoints???? idk how 
                         if (step === 1 && stateTask !== null) {
                             // create checkpoints
-                            console.log('step === 1 + task !== null -> create checkpoints');
+                            // console.log('step === 1 + task !== null -> create checkpoints');
                             createCheckpoints();
                         }
                     }}>

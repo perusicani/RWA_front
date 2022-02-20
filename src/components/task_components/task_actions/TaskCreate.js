@@ -1,6 +1,7 @@
 import React from 'react';
 import SkillsChipSelection from '../chips/SkillsChipSelection';
 
+//props === skills setSkills, task title, task descript, settitle, setdescript
 function TaskCreate(props) {
 
     const handleInputTitle = (event) => {
@@ -37,7 +38,7 @@ function TaskCreate(props) {
                 />
             </div>
             <div>
-                <SkillsChipSelection />
+                <SkillsChipSelection skills={props.skills} setSkills={props.setSkills} />
             </div>
         </div>
     </>

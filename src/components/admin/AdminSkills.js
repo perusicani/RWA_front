@@ -77,7 +77,7 @@ function AdminSkills() {
                         {
                             Skills.length > 0 ?
                                 <>
-                                    <Table striped bordered hover variant="dark" style={{ margin: 10 }}>
+                                    <Table striped bordered hover style={{ margin: 10 }}>
                                         <thead>
                                             <tr>
                                                 <th>#</th>

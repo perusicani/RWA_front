@@ -2,30 +2,37 @@ import React, { Component } from 'react';
 
 import Card from 'react-bootstrap/Card';
 import UserActions from './UserActions';
+import Chip from '@mui/material/Chip';
+import Tooltip from '@mui/material/Tooltip';
 
-class UserCard extends Component {
-
-    constructor(props) {
-        super(props);
-    }
+function UserCard(props) {
 
     //rendering component
-    render() {
-        return (
-            // <li>{this.props.data.name}</li>
-            <Card style={{ margin: 15 }}>
-                {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
-                <Card.Body>
-                    <Card.Title>{this.props.user.name}</Card.Title>
-                    <Card.Text>{this.props.user.description}</Card.Text>
+    return (
+        <Card style={{ margin: 15 }}>
+            <Card.Body>
+                <Card.Title>{props.user.name}</Card.Title>
+                <Card.Text>{props.user.description}</Card.Text>
 
-                    <UserActions userId={this.props.user.id} />
+                <footer style={{ margin: 3 }} className="blockquote-footer">
+                    {props.user.skills.length > 0
+                        ? props.user.skills.map(function (skill, i) {
+                            return <Tooltip key={i} title={skill.description}>
+                                <Chip
+                                    style={{ margin: 5 }}
+                                    label={skill.name}
+                                />
+                            </Tooltip>;
+                        })
+                        : <div>no skills</div>}
+                </footer>
 
-                </Card.Body>
-            </Card>
+                <UserActions userId={props.user.id} users={props.users} setUsers={props.setUsers} />
 
-        );
-    }
+            </Card.Body>
+        </Card>
+
+    );
 }
 
 

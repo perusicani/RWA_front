@@ -25,15 +25,11 @@ function AdminUsers() {
 
 
     const getUsers = async (pageNumber) => {
-
         axios.get(`/api/users?page=${pageNumber}`)
             .then(function (response) {
-                console.log(response.data);
-
                 setUsers(response.data.users.data);
                 setPagination({ total: response.data.total, pageCount: response.data.numberOfPages, currentPage: response.data.page });
             });
-
     }
 
     const handlePageClick = (event) => {
@@ -42,8 +38,7 @@ function AdminUsers() {
 
 
     const Users = users.map(function (user, i) {
-        //va svaki card pass -> title, description, array of checkpoints???, user_claim
-        return <UserCard key={i} user={user} />
+        return <UserCard key={i} user={user} users={users} setUsers={setUsers} />
     });
 
     return (
