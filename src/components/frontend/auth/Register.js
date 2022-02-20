@@ -38,7 +38,7 @@ function Register() {
             axios.post('/api/register', data).then((response) => {
                 if (response.status === 200) {
 
-                    if (response.data.validation_errors && response.data.validation_errors.length) {
+                    if (response.data.validation_errors) {
 
                         setRegister({ ...registerInput, error_list: response.data.validation_errors });
                         toast.error('Register failed!');

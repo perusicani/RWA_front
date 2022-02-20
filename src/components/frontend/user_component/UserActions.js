@@ -20,13 +20,12 @@ function UserActions(props) {
     const deleteUser = () => {
         axios.delete('/api/users/delete/' + props.userId)
             .then((response) => {
-                console.log(response);
-                toast.success(response.data);
+                toast.success('User deleted successfully!');
                 removeUserFromUI();
             })
             .catch((error) => {
                 console.log(error);
-                toast.error(error);
+                toast.error('User deletion failed!');
             });
         setShowDelete(false);
     }

@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import Button from 'react-bootstrap/Button';
 import Loader from 'react-spinners/BeatLoader';
+import { toast } from 'react-toastify';
 
 function SkillCreate() {
 
@@ -33,11 +34,13 @@ function SkillCreate() {
         axios.post('/api/skills/create', { skill: skill }).then((response) => {
             if (response.status === 200) {
                 console.log(response.data);
+                toast.success('Skill created successfully!');
                 setLoading(false);
 
                 navigate('/admin/skills');
             }
         }).catch((error) => {
+            toast.success('Skill creation failed!');
             console.log(error);
             setLoading(false);
         });

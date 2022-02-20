@@ -53,17 +53,11 @@ function Task(props) {
             axios.post('/api/tasks', { task: task, user_id: user_id })
                 .then(response => {
                     if (response.status === 200) {
-                        console.log('Task update success: ' + JSON.stringify(response.data));
-                        toast.success(response.data.message);
-                    }
-                    if (response.status === 422) {
-                        console.log(response);
-                        toast.error(response);
+                        console.log('Check from checkpoint 200');
                     }
                 })
                 .catch(error => {
-                    console.log(error);
-                    toast.error(error);
+                    console.log('Check from checkpoint err');
                 });
 
             //gettasks in parent

@@ -81,8 +81,7 @@ function TaskUpdate() {
         axios.post('/api/tasks', { task: task, user_id: user_id })
             .then(response => {
                 if (response.status === 200) {
-                    console.log('Task update success: ' + JSON.stringify(response.data));
-                    toast.success(response.data.message);
+                    toast.success('Task updated successfully!');
 
                 }
                 setStateTask({ task: response.data.task });
@@ -99,31 +98,22 @@ function TaskUpdate() {
                 });
 
                 addSkills(response.data.task.id, skillIds);
-
-                if (response.status === 422) {
-                    console.log(response);
-                    toast.error(response);
-                    setLoading(false);
-                }
             })
             .catch(error => {
-                console.log(error);
-                toast.error(error);
+                toast.error('Task update failed!');
                 setLoading(false);
             });
 
         axios.post('/api/checkpoints', { checkpoints: checkpoints })
             .then((response) => {
-                console.log(response);
-                toast.error(response);
+                toast.success('Checkpoints updated successfully!');
 
                 setLoading(false);
 
                 navigate('/tasks');
 
             }).catch((error) => {
-                console.log(error);
-                toast.error(error);
+                toast.error('Checkpoints update failed!');
                 setLoading(false);
             });
     }
@@ -146,10 +136,10 @@ function TaskUpdate() {
         axios.post('/api/tasks/add-skills', { taskId: taskId, skillIds: skillIds }
         ).then((skillResponse) => {
             if (skillResponse.status === 200) {
-                console.log(skillResponse.data);
+                toast.success('Skills updated successfully!');
             }
         }).catch((error) => {
-            console.log(error);
+            toast.error('Skills update failed!');
         });
     }
 

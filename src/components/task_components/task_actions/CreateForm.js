@@ -45,9 +45,7 @@ function CreateForm() {
                 response => {
                     setLoading(false);
                     if (response.status === 200) {
-                        console.log('Task created successfully!');
-                        toast.success(response.data.message);
-
+                        toast.success('Task created successfully!');
 
                         setStateTask({ task: response.data.task });
 
@@ -69,15 +67,10 @@ function CreateForm() {
 
                     setTitle({ title: response.data.task.title });
                     setDescription({ description: response.data.task.description });
-                    if (response.status === 422) {
-                        console.log(response);
-                        toast.error(response);
-                    }
                 })
             .catch(error => {
+                toast.error('An error occurred while creating the task!');
                 setLoading(false);
-                console.log(error);
-                toast.error(error);
             });
     }
 
@@ -106,8 +99,7 @@ function CreateForm() {
                 response => {
                     setLoading(false);
                     if (response.status === 200) {
-                        console.log('Task updated successfully!');
-                        toast.success(response.data.message);
+                        toast.success('Task updated successfully!');
 
                         // //if task skills ids is different from skills
                         var skillIds = [];
@@ -124,15 +116,10 @@ function CreateForm() {
                     setTitle({ title: response.data.task.title });
                     setDescription({ description: response.data.task.description });
 
-                    if (response.status === 422) {
-                        console.log(response);
-                        toast.error(response);
-                    }
                 })
             .catch(error => {
+                toast.error('An error occurred while updating the task!');
                 setLoading(false);
-                console.log(error);
-                toast.error(error);
             });
     }
 
@@ -145,16 +132,14 @@ function CreateForm() {
         axios.delete('/api/tasks/delete/' + stateTask.task.id)
             .then((response) => {
                 setLoading(false);
-                console.log(response);
-                toast.success(response.data);
+                toast.success('Task deleted successfully!');
 
                 // on successful delete -> go back
                 navigate(-1);
             })
             .catch((error) => {
+                toast.error('An error occurred while deleting the task!');
                 setLoading(false);
-                console.log(error);
-                toast.error(error);
             });
     }
 
@@ -181,7 +166,7 @@ function CreateForm() {
                 console.log(skillResponse.data);
             }
         }).catch((error) => {
-            console.log(error);
+            toast.error('An error occurred while setting skills!');
         });
     }
 
@@ -201,16 +186,13 @@ function CreateForm() {
         axios.post('/api/checkpoints/create', { checkpoints: checkpoints, task_id: stateTask.task.id })
             .then((response) => {
                 setLoading(false);
-                console.log(response);
-                toast.success(response.data);
-
+                toast.success('Successfully created checkpoints!');
                 // on successful create -> go back
                 navigate(-1);
             })
             .catch((error) => {
+                toast.error('An error occurred while creating the checkpoints!');
                 setLoading(false);
-                console.log(error);
-                toast.success(error.data);
             });
     }
 

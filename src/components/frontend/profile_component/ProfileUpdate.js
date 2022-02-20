@@ -67,7 +67,7 @@ function ProfileUpdate() {
                 response => {
                     if (response.status === 200) {
                         console.log('User update success: ' + JSON.stringify(response.data));
-                        toast.success(response.data.message);
+                        toast.success('User updated successfully!');
 
                         setName({ name: response.data.user.name });
                         setEmail({ email: response.data.user.email });
@@ -88,7 +88,7 @@ function ProfileUpdate() {
 
                     if (response.status === 422) {
                         console.log(response);
-                        toast.error(response);
+                        toast.error('User update failed!');
                     }
                 })
             .catch(error => {
