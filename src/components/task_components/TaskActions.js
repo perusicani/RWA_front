@@ -19,13 +19,11 @@ function TaskActions(props) {
     const deleteTask = () => {
         axios.delete('/api/tasks/delete/' + props.task.id)
             .then((response) => {
-                console.log(response);
-                toast.success(response.data);
+                toast.success('Successfully deleted task!');
                 removeTaskFromUI();
             })
             .catch((error) => {
-                console.log(error);
-                toast.error(error);
+                toast.error('Task delete failed!');
             });
         setShowDelete(false);
     }
@@ -51,8 +49,6 @@ function TaskActions(props) {
 
     return (
         <div className="btn-group" role="group">
-            <ToastContainer />
-
             {TaskButtons}
 
             <Modal show={showDelete} onHide={handleCloseDelete}>

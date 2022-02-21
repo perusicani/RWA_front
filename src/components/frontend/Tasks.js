@@ -18,6 +18,8 @@ function Tasks() {
     const [tasks, setTasks] = useState([]);
     const [pagination, setPagination] = useState({ total: null, pageCount: 0, currentPage: 0 });
 
+    const [filteredTasks, setFilteredTasks] = useState([]);
+
     useEffect(() => {
         getTasks(1);
     }, []);
@@ -26,6 +28,7 @@ function Tasks() {
         axios.get(`/api/tasks?page=${pageNumber}`)
             .then(function (response) {
                 setTasks(response.data.tasks.data);
+                // setFilteredTasks(response.data.tasks.data);
                 setPagination({ total: response.data.total, pageCount: response.data.numberOfPages, currentPage: response.data.page });
             });
     }
@@ -38,8 +41,32 @@ function Tasks() {
         getTasks(pagination.currentPage);
     }
 
+    // useEffect(() => {
+    //     return () => {
+    //         console.log(tasks);
+    //     }
+    // }, [tasks]);
+
+
+
+    // let result = [];
+    // let value = '';
+
+    // const handleSearch = (event) => {
+    //     value = event.target.value.toLowerCase();
+    //     console.log(value);
+    //     if (value !== null && value !== '') {
+    //         result = tasks.filter((task) => {
+    //             return task.title.toLowerCase().search(value) != -1;
+    //         });
+    //         setFilteredTasks(result);
+    //     } else {
+    //         setFilteredTasks(tasks);
+    //     }
+    // }
+
     const Tasks = tasks.map(function (task, i) {
-        return <Task key={i} task={task} tasks={tasks} setTasks={setTasks} reload={reload} />
+        return <Task key={task.id} task={task} tasks={tasks} setTasks={setTasks} reload={reload} />
     });
 
     return (
@@ -56,6 +83,9 @@ function Tasks() {
                         {
                             Tasks.length > 0 ?
                                 <>
+                                    {/* filters */}
+                                    {/* <input type="text" onChange={(event) => handleSearch(event)} /> */}
+
                                     {Tasks.length > 0 && Tasks}
                                     <ReactPaginate
                                         breakLabel="..."

@@ -27,6 +27,8 @@ function CreateForm() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
+    const [taskCreateError, setTaskCreateError] = useState('');
+
     //if submit clicked and step == 0
     const createTask = (event) => {
         setLoading(true);
@@ -70,6 +72,10 @@ function CreateForm() {
                 })
             .catch(error => {
                 toast.error('An error occurred while creating the task!');
+                // console.log(error.message);
+                // setTaskCreateError({ titleError: error.message, descriptionError: error.message['task.description'] })
+                // console.log(taskCreateError.title);
+                // console.log(taskCreateError.description);
                 setLoading(false);
             });
     }

@@ -45,7 +45,7 @@ function AdminTasks() {
 
 
     const Tasks = tasks.map(function (task, i) {
-        return <Task key={i} task={task} tasks={tasks} setTasks={setTasks} />
+        return <Task key={task.id} task={task} tasks={tasks} setTasks={setTasks} />
     });
 
     return (

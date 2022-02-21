@@ -56,7 +56,7 @@ function AdminSkills() {
 
     const Skills = skills.map(function (skill, i) {
         return (
-            <tr key={i}>
+            <tr key={skill.id}>
                 <AdminSkill skill={skill} delete={deleteSkill} />
             </tr>
         );

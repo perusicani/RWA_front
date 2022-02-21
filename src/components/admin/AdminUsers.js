@@ -38,7 +38,7 @@ function AdminUsers() {
 
 
     const Users = users.map(function (user, i) {
-        return <UserCard key={i} user={user} users={users} setUsers={setUsers} />
+        return <UserCard key={user.id} user={user} users={users} setUsers={setUsers} />
     });
 
     return (

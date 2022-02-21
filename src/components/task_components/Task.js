@@ -66,7 +66,7 @@ function Task(props) {
     }
 
     const Checkpoints = props.task.checkpoints.map(function (checkpoint, i) {
-        return <CheckpointCard key={i} checkpoint={checkpoint} callBack={callbackFromCheckpoint} />
+        return <CheckpointCard key={checkpoint.id} checkpoint={checkpoint} callBack={callbackFromCheckpoint} />
     });
 
 
@@ -81,13 +81,13 @@ function Task(props) {
                 </Link>
             </Card.Text> */}
 
-            <TaskActions task={props.task} tasks={props.tasks} setTasks={props.setTasks} />
+            <TaskActions key={props.task.id} task={props.task} tasks={props.tasks} setTasks={props.setTasks} />
         </>;
     }
 
     const Skills = props.task.skills.map(function (skill, i) {
         return <Tooltip
-            key={i}
+            key={skill.id}
             title={skill.description}
         >
             <Chip
