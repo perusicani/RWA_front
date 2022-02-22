@@ -78,7 +78,7 @@ function TaskUpdate() {
 
         var user_id = userId.userId;
 
-        axios.post('/api/tasks', { task: task, user_id: user_id })
+        axios.post('/api/tasks/update', { task: task, user_id: user_id })
             .then(response => {
                 if (response.status === 200) {
                     toast.success('Task updated successfully!');

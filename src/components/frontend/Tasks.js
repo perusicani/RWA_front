@@ -5,6 +5,7 @@ import axios from 'axios';
 import { ToastContainer } from 'react-toastify'; //here, not in updatemodal since we need it shown in parent
 import 'react-toastify/dist/ReactToastify.css';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import Form from 'react-bootstrap/Form'
 import ReactPaginate from 'react-paginate';
 
 import { Link } from 'react-router-dom';
@@ -18,14 +19,17 @@ function Tasks() {
     const [tasks, setTasks] = useState([]);
     const [pagination, setPagination] = useState({ total: null, pageCount: 0, currentPage: 0 });
 
-    const [filteredTasks, setFilteredTasks] = useState([]);
+    const [completed, setCompleted] = useState('');
+    const [search, setSearch] = useState('');
+
+    // const [filteredTasks, setFilteredTasks] = useState([]);
 
     useEffect(() => {
         getTasks(1);
     }, []);
 
     const getTasks = async (pageNumber) => {
-        axios.get(`/api/tasks?page=${pageNumber}`)
+        axios.post(`/api/tasks?page=${pageNumber}`, { search: search, completed: completed })
             .then(function (response) {
                 setTasks(response.data.tasks.data);
                 // setFilteredTasks(response.data.tasks.data);
@@ -41,17 +45,34 @@ function Tasks() {
         getTasks(pagination.currentPage);
     }
 
+    const handleSearch = (event) => {
+        setSearch(event.target.value);
+    }
+
+    useEffect(() => {
+        return () => {
+            getTasks(1);
+        }
+    }, [search, completed]);
+
+
+    // useEffect(() => {
+    //     return () => {
+    //         getTasks(pagination.currentPage, search);
+    //     }
+    // }, [search]);
+
+
+
+    // FRONTEND FILTRACJIA
     // useEffect(() => {
     //     return () => {
     //         console.log(tasks);
     //     }
     // }, [tasks]);
 
-
-
     // let result = [];
     // let value = '';
-
     // const handleSearch = (event) => {
     //     value = event.target.value.toLowerCase();
     //     console.log(value);
@@ -84,9 +105,19 @@ function Tasks() {
                             Tasks.length > 0 ?
                                 <>
                                     {/* filters */}
-                                    {/* <input type="text" onChange={(event) => handleSearch(event)} /> */}
+                                    <input type="text" onChange={handleSearch} />
+                                    <Form.Check
+                                        type='checkbox'
+                                        defaultChecked={false}
+                                        label='Completed?'
+                                        onChange={(checkboxStatus) => {
+                                            setCompleted(checkboxStatus.target.checked ? "0" : "1");
+                                            getTasks(1);
+                                        }}
+                                    />
 
                                     {Tasks.length > 0 && Tasks}
+
                                     <ReactPaginate
                                         breakLabel="..."
                                         nextLabel="next >"

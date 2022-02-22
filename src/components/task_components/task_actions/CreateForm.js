@@ -100,7 +100,7 @@ function CreateForm() {
 
         var user_id = stateTask.task.user_id;
 
-        axios.post('/api/tasks', { task: task, user_id: user_id })
+        axios.post('/api/tasks/update', { task: task, user_id: user_id })
             .then(
                 response => {
                     setLoading(false);
