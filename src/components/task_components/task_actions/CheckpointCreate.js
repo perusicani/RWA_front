@@ -17,7 +17,7 @@ function CheckpointCreate(props) {
 
     return (
         <>
-            <Container>
+            <Container className='m-1'>
                 <Row>
                     <Col>
                         <input

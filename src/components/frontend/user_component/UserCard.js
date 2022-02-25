@@ -26,8 +26,9 @@ function UserCard(props) {
                         })
                         : <div>no skills</div>}
                 </footer>
-
-                <UserActions userId={props.user.id} users={props.users} setUsers={props.setUsers} />
+                <div className='d-flex justify-content-end'>
+                    <UserActions userId={props.user.id} users={props.users} setUsers={props.setUsers} />
+                </div>
 
             </Card.Body>
         </Card>

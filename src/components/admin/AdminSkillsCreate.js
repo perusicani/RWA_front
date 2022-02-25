@@ -33,15 +33,15 @@ function SkillCreate() {
 
         axios.post('/api/skills/create', { skill: skill }).then((response) => {
             if (response.status === 200) {
-                console.log(response.data);
+                // console.log(response.data);
                 toast.success('Skill created successfully!');
                 setLoading(false);
 
                 navigate('/admin/skills');
             }
         }).catch((error) => {
-            toast.success('Skill creation failed!');
-            console.log(error);
+            toast.error('Skill creation failed!');
+            // console.log(error.message);
             setLoading(false);
         });
     }
@@ -53,7 +53,7 @@ function SkillCreate() {
                 !loading
                     ? <>
                         <div className="form-group">
-                            <label htmlFor="name">Name</label>
+                            <label htmlFor="name" className='profile-caption'>Name</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -65,7 +65,7 @@ function SkillCreate() {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="description">Description</label>
+                            <label htmlFor="description" className='profile-caption'>Description</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -76,7 +76,9 @@ function SkillCreate() {
                                 name="name"
                             />
                         </div>
-                        <Button onClick={createSkill}>Submit</Button>
+                        <div className='d-flex justify-content-end pt-4'>
+                            <Button onClick={createSkill}>Submit</Button>
+                        </div>
                     </>
                     : <Loader />
             }

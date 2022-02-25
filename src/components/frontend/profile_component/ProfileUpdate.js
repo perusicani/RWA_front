@@ -117,9 +117,11 @@ function ProfileUpdate() {
     var SubmitButton = '';
     if (id.id === localStorage.getItem('user_id') || localStorage.getItem('role') === 'true') {
         SubmitButton = (
-            <Button onClick={updateUser} className="btn btn-success">
-                Submit
-            </Button>
+            <div className='d-flex justify-content-end'>
+                <Button onClick={updateUser} className="btn btn-success">
+                    Submit
+                </Button>
+            </div>
         );
     }
 
@@ -128,7 +130,7 @@ function ProfileUpdate() {
         <div>
             <h1>{id.id}</h1>
             <div className="form-group">
-                <label htmlFor="name">Name</label>
+                <label htmlFor="name" className='profile-caption'>Name</label>
                 <input
                     type="text"
                     className="form-control"
@@ -140,7 +142,7 @@ function ProfileUpdate() {
                 />
             </div>
             <div className="form-group">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email" className='profile-caption'>Email</label>
                 <input
                     type="text"
                     className="form-control"
@@ -152,7 +154,7 @@ function ProfileUpdate() {
                 />
             </div>
             <div className="form-group">
-                <label htmlFor="description">Description</label>
+                <label htmlFor="description" className='profile-caption'>Description</label>
                 <input
                     type="text"
                     className="form-control"
@@ -163,7 +165,7 @@ function ProfileUpdate() {
                     name="description"
                 />
             </div>
-            <div>
+            <div className='pt-3 pb-3'>
                 <SkillsChipSelection skills={skills} setSkills={setSkills} />
             </div>
             {SubmitButton}

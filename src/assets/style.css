@@ -1,0 +1,123 @@
+a {
+    color: darkgray !important;
+}
+
+a:hover {
+    color: gray !important;
+}
+
+.btn-primary {
+    background-color: #212529;
+    border-color: #212529;
+    color: darkgray !important;
+}
+
+.btn-primary:hover {
+    background-color: darkgray;
+    border-color: darkgray;
+    color: #212529 !important;
+}
+
+.btn-info {
+    background-color: darksalmon;
+    border-color: darksalmon;
+    color: #212529 !important;
+}
+
+.btn-info:hover {
+    background-color: darkgray;
+    border-color: darkgray;
+    color: #212529 !important;
+}
+
+.btn-logout {
+    background-color: darkgray;
+    border-color: darkgray;
+    color: #212529 !important;
+}
+
+.btn-logout:hover {
+    background-color: #212529;
+    border-color: #212529;
+    color: darkgray !important;
+}
+
+.form-check-input {
+    background-color: darkgray !important;
+    border-color: darkgray;
+}
+
+.form-check-input:checked {
+    background-color: #212529 !important;
+    border-color: #212529;
+}
+
+.chip {
+    background-color: darksalmon !important;
+}
+
+.page-link {
+    background-color: #212529 !important;
+}
+
+ul.pagination li.active a {
+    color: #212529 !important;
+    background-color: darksalmon !important;
+    border-color: darksalmon !important;
+}
+  
+ul.pagination li a:hover,
+ul.pagination li a.active {
+    background-color: darksalmon !important;
+    border-color: darksalmon !important;
+}
+
+.radio-item input[type="radio"]:checked {
+    color: darksalmon ;
+    background-color: darksalmon ;
+    border: #212529;
+}
+
+.form-control:focus {
+    border-color: darksalmon !important;
+    box-shadow: darksalmon !important;
+}
+
+.chip-selection {
+    color: darksalmon !important;
+}
+
+.chip-selection:active {
+    color: darksalmon !important;
+    border: darksalmon !important;
+}
+
+.profile-card {
+    background-color: gainsboro;
+}
+
+.profile-card-header {
+    color: darkgray;
+    background-color: #212529;
+}
+
+.profile-caption {
+    color: darkgray;
+}
+
+.radio-item:checked {
+    color: #212529;
+    background-color: #212529;
+}
+
+.logout-link {
+    color: #212529 !important;
+    background-color: darksalmon;
+}
+
+img {
+    max-width:650px;
+    max-height:450px;
+    width:auto;
+    height:auto;
+}

@@ -40,9 +40,12 @@ function TaskActions(props) {
     if (props.task.user_id.toString() === localStorage.getItem('user_id') || localStorage.getItem('role') === 'true') {
         TaskButtons = (
             <>
-                <Link to={'/tasks/update?id=' + props.task.id} className="btn btn-info" >Update</Link>
-
-                <Button type="button" className="btn btn-danger" onClick={handleShowDelete} >Delete</Button>
+                <div className='p-1'>
+                    <Link to={'/tasks/update?id=' + props.task.id} className="btn btn-info " >Update</Link>
+                </div>
+                <div className='p-1'>
+                    <Button type="button" className="btn btn-danger" onClick={handleShowDelete} >Delete</Button>
+                </div>
             </>
         );
     }

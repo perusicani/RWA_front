@@ -25,7 +25,7 @@ function AdminTasks() {
 
 
     const getTasks = async (pageNumber) => {
-        axios.get(`/api/tasks?page=${pageNumber}`,
+        axios.post(`/api/tasks?page=${pageNumber}`
             // {
             //     onDownloadProgress: (progressEvent) => {
             //         console.log('event: ', progressEvent);
@@ -65,11 +65,11 @@ function AdminTasks() {
                                     {Tasks.length > 0 && Tasks}
                                     <ReactPaginate
                                         breakLabel="..."
-                                        nextLabel="next >"
+                                        nextLabel=">"
                                         onPageChange={handlePageClick}
                                         pageRangeDisplayed={5}
                                         pageCount={pagination.pageCount}
-                                        previousLabel="< previous"
+                                        previousLabel="<"
                                         renderOnZeroPageCount={null}
                                         containerClassName='pagination'
                                         pageClassName='page-item'

@@ -38,8 +38,8 @@ function CheckpointsCreate(props) {
                     <h4>Description: {props.task.description}</h4>
                 </Card.Header>
                 <Card.Body>
-                    {Checkpoints.length > 0 && Checkpoints}
                     <Button onClick={addCheckpoint} >+</Button>
+                    {Checkpoints.length > 0 && Checkpoints}
                 </Card.Body>
             </Card>
         </>

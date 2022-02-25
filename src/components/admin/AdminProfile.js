@@ -13,6 +13,7 @@ function AdminProfile() {
             <h1>
                 AdminProfile
             </h1>
+            <h4 className='profile-caption'>WIP: Still thinking about what his could be...</h4>
         </>
     );
 

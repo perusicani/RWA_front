@@ -47,6 +47,7 @@ function SkillsChipSelection(props) {
             title={skill.description}
         >
             <Chip
+                className='chip-selection'
                 style={{ margin: 5 }}
                 label={skill.name}
                 onClick={() => skillOnClick(skill)}

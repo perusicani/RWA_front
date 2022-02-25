@@ -92,11 +92,11 @@ function AdminSkills() {
                                     </Table>
                                     <ReactPaginate
                                         breakLabel="..."
-                                        nextLabel="next >"
+                                        nextLabel=">"
                                         onPageChange={handlePageClick}
                                         pageRangeDisplayed={5}
                                         pageCount={pagination.pageCount}
-                                        previousLabel="< previous"
+                                        previousLabel="<"
                                         renderOnZeroPageCount={null}
                                         containerClassName='pagination'
                                         pageClassName='page-item'

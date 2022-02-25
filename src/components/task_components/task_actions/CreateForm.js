@@ -172,7 +172,8 @@ function CreateForm() {
                 console.log(skillResponse.data);
             }
         }).catch((error) => {
-            toast.error('An error occurred while setting skills!');
+            console.log(error);
+            // toast.error('An error occurred while setting skills!');
         });
     }
 
@@ -240,49 +241,50 @@ function CreateForm() {
     var Buttons = '';
     if (!loading) {
         Buttons = <>
-            <div>
-                <Button
-                    onClick={() => {
-                        // if task == null && step == 0 -> navigate(-1);
-                        if (step === 0 && stateTask === null) {
-                            //navigate away from page (nothing has been submitted)
-                            // console.log('first step + task === null -> navigate(-1)');
-                            navigate(-1);
-                        }
-                        // if task !=== null && step === 0 -> delete task by id and navigate to /tasks
-                        if (step === 0 && stateTask != null) {
-                            // console.log('step === 0 + task != null -> delete task new task');
-                            deleteTask();
-                        }
-                        //if step === 1 -> jus go back to prev component
-                        if (step === 1) {
-                            // console.log('step === 1 -> going to previous step');
-                            setStep((currentStep) => currentStep - 1);
-                        }
-                    }}>
-                    {FormCancelText[step]}
-                </Button>
-                <Button
-                    onClick={() => {
-                        // if first step && task not created yet -> create task and wait for response
-                        if (step === 0 && stateTask === null) {
-                            // console.log('step === 0 + task === null -> creating task');
-                            createTask();
-                        }
-                        if (step === 0 && stateTask !== null) {
-                            // console.log('step === 0 + task !== null -> updating task');
-                            updateTask();
-                        }
-                        //if second step and task was created -> submit all checkpoints???? idk how 
-                        if (step === 1 && stateTask !== null) {
-                            // create checkpoints
-                            // console.log('step === 1 + task !== null -> create checkpoints');
-                            createCheckpoints();
-                        }
-                    }}>
-                    {FormSubmitText[step]}
-                </Button>
-            </div> {/*  footer */}
+            <Button
+                className='m-1 btn-primary'
+                onClick={() => {
+                    // if task == null && step == 0 -> navigate(-1);
+                    if (step === 0 && stateTask === null) {
+                        //navigate away from page (nothing has been submitted)
+                        // console.log('first step + task === null -> navigate(-1)');
+                        navigate(-1);
+                    }
+                    // if task !=== null && step === 0 -> delete task by id and navigate to /tasks
+                    if (step === 0 && stateTask != null) {
+                        // console.log('step === 0 + task != null -> delete task new task');
+                        deleteTask();
+                    }
+                    //if step === 1 -> jus go back to prev component
+                    if (step === 1) {
+                        // console.log('step === 1 -> going to previous step');
+                        setStep((currentStep) => currentStep - 1);
+                    }
+                }}>
+                {FormCancelText[step]}
+            </Button>
+            <Button
+                className='m-1 btn-primary'
+                onClick={() => {
+                    // if first step && task not created yet -> create task and wait for response
+                    if (step === 0 && stateTask === null) {
+                        // console.log('step === 0 + task === null -> creating task');
+                        createTask();
+                    }
+                    if (step === 0 && stateTask !== null) {
+                        // console.log('step === 0 + task !== null -> updating task');
+                        updateTask();
+                    }
+                    //if second step and task was created -> submit all checkpoints???? idk how 
+                    if (step === 1 && stateTask !== null) {
+                        // create checkpoints
+                        // console.log('step === 1 + task !== null -> create checkpoints');
+                        createCheckpoints();
+                    }
+                }}>
+                {FormSubmitText[step]}
+            </Button>
+
         </>
     }
 
@@ -294,7 +296,9 @@ function CreateForm() {
             <div>
                 <h2>{FormHeaders[step]}</h2> {/*  header */}
                 <div>{StepDisplay()}</div> {/*  body */}
-                {Buttons}
+                <div className='d-flex justify-content-end'>
+                    {Buttons}
+                </div>
             </div> {/*  form */}
         </div>
     );

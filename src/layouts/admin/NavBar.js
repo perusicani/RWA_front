@@ -37,18 +37,20 @@ const NavBar = () => {
     }
 
     return (
-        <Navbar className="sb-topnav navbar navbar-expand navbar-dark bg-dark flex">
+        <Navbar className="sb-topnav navbar navbar-expand navbar-dark bg-dark ">
             <ToastContainer />
-            <Container>
+            <Container className='d-flex justify-content-start'>
                 <Navbar.Brand href="/admin">Admin panel</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            </Container>
+            <Container className='d-flex justify-content-end'>
+                {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         {/* <Nav.Link href="#home">Home</Nav.Link> */}
                         <NavDropdown title="More actions" id="basic-nav-dropdown">
                             <NavDropdown.Item href="/">Back to FrontEnd</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item style={{ color: 'red' }} onClick={logoutSubmit}>Logout</NavDropdown.Item>
+                            <NavDropdown.Item className="logout-link" onClick={logoutSubmit}>Logout</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

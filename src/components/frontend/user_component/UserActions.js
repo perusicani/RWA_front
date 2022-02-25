@@ -43,11 +43,11 @@ function UserActions(props) {
         <div className="btn-group" role="group">
             <ToastContainer />
 
-            <Link to={'/profile?id=' + props.userId} className="btn btn-primary" >view</Link>
+            <Link to={'/profile?id=' + props.userId} className="btn btn-primary m-1" >view</Link>
 
-            <Link to={'/profile/update?id=' + props.userId} className="btn btn-info" >Update</Link>
+            <Link to={'/profile/update?id=' + props.userId} className="btn btn-info m-1" >Update</Link>
 
-            <Button type="button" className="btn btn-danger" onClick={handleShowDelete} >Delete</Button>
+            <Button type="button" className="btn btn-danger m-1" onClick={handleShowDelete} >Delete</Button>
 
             <Modal show={showDelete} onHide={handleCloseDelete}>
                 <Modal.Header closeButton>
@@ -57,10 +57,10 @@ function UserActions(props) {
                 <Modal.Body>This action is irreversable, so think this through or send the user a warning by their email!</Modal.Body>
                 <Modal.Body>(Their email can be found on their profile)</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseDelete}>
+                    <Button className="btn-info" onClick={handleCloseDelete}>
                         No
                     </Button>
-                    <Button variant="danger" onClick={deleteUser}>
+                    <Button className="btn-danger" onClick={deleteUser}>
                         Delete
                     </Button>
                 </Modal.Footer>

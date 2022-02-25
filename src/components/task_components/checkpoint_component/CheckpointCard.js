@@ -11,6 +11,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { Link } from 'react-router-dom';
 
 //props == checkpoint object
 function CheckpointCard(props) {
@@ -85,7 +86,9 @@ function CheckpointCard(props) {
                 return <Button onClick={onClickUnClaim}>Unclaim Task?</Button>;
             } else if (claimed !== null) {
                 //show whose claim it is
-                return <div>{claimed.toString()}</div>;
+                return <Link to={'/profile?id=' + claimed.toString()}>
+                    {claimed.toString()}
+                </Link>;
             }
         }
     }

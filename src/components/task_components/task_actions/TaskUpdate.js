@@ -136,10 +136,10 @@ function TaskUpdate() {
         axios.post('/api/tasks/add-skills', { taskId: taskId, skillIds: skillIds }
         ).then((skillResponse) => {
             if (skillResponse.status === 200) {
-                toast.success('Skills updated successfully!');
+                // toast.success('Skills updated successfully!');
             }
         }).catch((error) => {
-            toast.error('Skills update failed!');
+            // toast.error('Skills update failed!');
         });
     }
 

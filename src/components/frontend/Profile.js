@@ -34,11 +34,11 @@ function Profile() {
 
         axios.get('/api/users/' + id)
             .then((response) => {
-                console.log(response);
+                // console.log(response);
                 setUser({ user: response.data.user });
             })
             .catch((error) => {
-                console.log(error);
+                // console.log(error);
                 setError({ error: true });
             });
     }, []);
@@ -53,7 +53,9 @@ function Profile() {
     var EditButtons = '';
     if (id.id === localStorage.getItem('user_id') || localStorage.getItem('role') === 'true') {
         EditButtons = (
-            <Link className='btn btn-info' to={'/profile/update?id=' + id.id} >Edit profile</Link>
+            <div className='d-flex justify-content-end'>
+                <Link className='btn btn-info m-3' to={'/profile/update?id=' + id.id} >Edit profile</Link>
+            </div>
         );
     }
 
@@ -76,19 +78,19 @@ function Profile() {
                 <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
                 <Breadcrumb.Item active>Profile</Breadcrumb.Item>
             </Breadcrumb>
-            <Card style={{}}>
-                <Card.Header>Users data</Card.Header>
+            <Card className='profile-card p-3'>
+                <Card.Header className='profile-card-header'>Users data</Card.Header>
                 <ListGroup variant="flush">
                     <div>
                         {
                             user ?
                                 <>
-                                    <ListGroup.Item>id: {user.user.id ?? ''}</ListGroup.Item>
-                                    <ListGroup.Item>name: {user.user.name ?? ''}</ListGroup.Item>
-                                    <ListGroup.Item>
+                                    <div className='profile-caption'>Id:</div> <ListGroup.Item> <h4>{user.user.id ?? ''}</h4> </ListGroup.Item>
+                                    <div className='profile-caption'>Name:</div><ListGroup.Item> <h4>{user.user.name ?? ''}</h4> </ListGroup.Item>
+                                    <div className='profile-caption'>Email:</div><ListGroup.Item>
                                         <Row>
                                             <Col>
-                                                email: {user.user.email ?? ''}
+                                                <h4>{user.user.email ?? ''}</h4>
                                             </Col>
                                             <Col>
                                                 <Button onClick={sendEmail}>
@@ -97,7 +99,7 @@ function Profile() {
                                             </Col>
                                         </Row>
                                     </ListGroup.Item>
-                                    <ListGroup.Item>description: {user.user.description ?? ''}</ListGroup.Item>
+                                    <div className='profile-caption'>Description:</div><ListGroup.Item> <h4> {user.user.description ?? ''}</h4></ListGroup.Item>
                                 </>
                                 : <Loader />
                         }
@@ -110,6 +112,7 @@ function Profile() {
                                 ? user.user.skills.map(function (skill, i) {
                                     return <Tooltip key={i} title={skill.description}>
                                         <Chip
+                                            className='chip'
                                             style={{ margin: 5 }}
                                             label={skill.name}
                                         />

@@ -58,7 +58,7 @@ function NavBar() {
 
                 {/* <Link to={'/tasks/update?id=' + props.task.id} className="btn btn-info" >Update</Link> */}
                 <Nav.Item> <Nav.Link href={'/profile?id=' + localStorage.getItem('user_id')}>Profile</Nav.Link> </Nav.Item>
-                <Button type='button' onClick={logoutSubmit} className="nav-link btn btn-danger btn-sm text-white" >Logout</Button>
+                <Button type='button' onClick={logoutSubmit} className="nav-link btn btn-logout btn-sm text-white" >Logout</Button>
             </>
         );
     }
@@ -66,8 +66,10 @@ function NavBar() {
     return (
         <Navbar bg="dark" variant="dark" expand >
             <ToastContainer />
-            <Container>
-                <Navbar.Brand href="/" >Do my bidding</Navbar.Brand>
+            <Container className='d-flex justify-content-start'>
+                <Navbar.Brand href="/" className='mr-auto' >Do my bidding</Navbar.Brand>
+            </Container>
+            <Container className='d-flex justify-content-end'>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Nav.Item> <Nav.Link href="/">Home</Nav.Link> </Nav.Item>
                 {AuthButtons}

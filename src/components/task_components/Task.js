@@ -38,6 +38,7 @@ function Task(props) {
 
         if (update) {
 
+
             var task = {
                 id: props.task.id,
                 title: props.task.title,
@@ -47,17 +48,18 @@ function Task(props) {
 
             var user_id = props.task.userId;
 
-            console.log(task);
+            // console.log(task);
 
             //check if all checkpoints status === 1, send status update for task
-            axios.post('/api/tasks', { task: task, user_id: user_id })
+            axios.post('/api/tasks/update', { task: task, user_id: user_id })
                 .then(response => {
                     if (response.status === 200) {
-                        console.log('Check from checkpoint 200');
+                        // console.log('updating task with status 1 since all checkpoints are checked');
+                        console.log(response.data);
                     }
                 })
                 .catch(error => {
-                    console.log('Check from checkpoint err');
+                    // console.log('Check from checkpoint err');
                 });
 
             //gettasks in parent
@@ -90,7 +92,7 @@ function Task(props) {
             key={skill.id}
             title={skill.description}
         >
-            <Chip
+            <Chip className='chip'
                 style={{ margin: 5 }}
                 label={skill.name}
             />
@@ -98,7 +100,7 @@ function Task(props) {
     });
 
     return (
-        < Card style={{ margin: 15, background: props.task.status ? '#dddddd' : 'white' }} >
+        < Card style={{ marginTop: 15, background: props.task.status ? '#dddddd' : 'white' }} >
             <Card.Body>
                 <Card.Title>{props.task.title}</Card.Title>
                 <Card.Text>{props.task.description}</Card.Text>
@@ -120,12 +122,16 @@ function Task(props) {
                         </> : <Loader />}
                 </footer>
                 <Card.Text>
-                    <Link className='btn btn-primary' to={'/profile?id=' + props.task.user_id}>
-                        Creators id: {props.task.user_id}
-                    </Link>
+                    <div className='pt-3'>
+                        <Link className='btn btn-primary' to={'/profile?id=' + props.task.user_id}>
+                            Creators id: {props.task.user_id}
+                        </Link>
+                    </div>
+                    <div className='d-flex justify-content-end'>
+                        {CompleteButtons}
+                    </div>
                 </Card.Text>
 
-                {CompleteButtons}
             </Card.Body>
         </Card >
     );
