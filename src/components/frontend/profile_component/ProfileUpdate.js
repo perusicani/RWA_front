@@ -143,15 +143,7 @@ function ProfileUpdate() {
             </div>
             <div className="form-group">
                 <label htmlFor="email" className='profile-caption'>Email</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="email"
-                    required
-                    value={email.email ?? ''}
-                    onChange={handleInputEmail}
-                    name="email"
-                />
+                <div>{email.email ?? ''}</div>
             </div>
             <div className="form-group">
                 <label htmlFor="description" className='profile-caption'>Description</label>
