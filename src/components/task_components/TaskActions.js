@@ -60,10 +60,10 @@ function TaskActions(props) {
                 </Modal.Header>
                 <Modal.Body>Are you sure you wish to delete this Task?</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseDelete}>
+                    <Button className="btn-info" onClick={handleCloseDelete}>
                         No
                     </Button>
-                    <Button variant="danger" onClick={deleteTask}>
+                    <Button className="btn-danger" onClick={deleteTask}>
                         Delete
                     </Button>
                 </Modal.Footer>
